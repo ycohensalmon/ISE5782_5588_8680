@@ -8,7 +8,7 @@ import static primitives.Util.*;
 /**
  * This class will serve all primitive classes based on three numbers
  * 
- * @author Dan Zilberstein
+ * @author Yossef Cohen-Salmon
  */
 class Double3 {
 	final double d1;
@@ -52,7 +52,7 @@ class Double3 {
 
 	@Override
 	public String toString() {
-		return "(" + d1 + "," + d2 + "," + d3 + ")";
+		return "(" + d1 + "," + d2 + "," + d3 + ")\n";
 	}
 
 	/**
