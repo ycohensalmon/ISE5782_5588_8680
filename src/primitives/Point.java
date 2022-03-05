@@ -31,9 +31,9 @@ public class Point {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof Vector))
+		if (!(obj instanceof Point))
 			return false;
-            Vector other = (Vector) obj;
+            Point other = (Point) obj;
 		return isZero(xyz.d1 - other.xyz.d1) && isZero(xyz.d2 - other.xyz.d2) && isZero(xyz.d3 - other.xyz.d3);
 	}
 

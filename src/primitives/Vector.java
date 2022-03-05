@@ -5,6 +5,7 @@ public class Vector extends Point{
 
     public Vector(double i, double j, double k) {
         super(i, j, k);
+        if (i == 0 && j == 0 && k == 0) throw new IllegalArgumentException("ERROR: zero vector");
     }
 
     public Vector scale(double d) {
@@ -36,6 +37,7 @@ public class Vector extends Point{
         double d1 = xyz.d2 * v.xyz.d3 - xyz.d3 * v.xyz.d2;
         double d2 = xyz.d1 * v.xyz.d3 - xyz.d3 * v.xyz.d1;
         double d3 = xyz.d1 * v.xyz.d2 - xyz.d2 * v.xyz.d1;
+        if (d1 == 0 && d2 == 0 && d3 == 0) throw new IllegalArgumentException("ERROR: zero vector");
         return new Vector(d1,d2,d3);
     }
 
