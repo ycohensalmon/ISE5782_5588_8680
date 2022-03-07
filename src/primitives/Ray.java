@@ -1,10 +1,14 @@
 package primitives;
 
+/**
+ * Ray class represents the set of points on a line that are on one side of a given point on a line called the head of the fund.
+ * Defined by point and direction
+ */
 public class Ray {
-    private Point p0;
-    private Vector dir;
+    final private Point p0;
+    final private Vector dir;
     /**
-     * constractor
+     * constructor
      * @param p0 point
      * @param dir vector
      */
@@ -13,8 +17,16 @@ public class Ray {
         this.dir = dir.normalize();
     }
 
+    /**
+     * get point on the ray
+     * @return point on ray
+     */
     public Point getP0() { return p0; }
 
+    /**
+     * get the vector on the ray
+     * @return vector on the ray
+     */
     public Vector getDir() { return dir; }
 
     /**
@@ -28,10 +40,9 @@ public class Ray {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof Ray))
+		if (!(obj instanceof Ray other))
 			return false;
-            Ray other = (Ray) obj;
-		return this.dir.equals(other.dir) && this.p0.equals(other.p0);
+        return this.dir.equals(other.dir) && this.p0.equals(other.p0);
     }
 
     /**

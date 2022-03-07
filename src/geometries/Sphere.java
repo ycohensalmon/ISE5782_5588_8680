@@ -3,9 +3,12 @@ package geometries;
 import primitives.Point;
 import primitives.Vector;
 
+/**
+ * This class represent a sphere like a ball and defined by point and radius
+ */
 public class Sphere implements Geometry {
-    private Point center;
-    private double radius;
+    final private Point center;
+    final private double radius;
 
     /**
      * constructor

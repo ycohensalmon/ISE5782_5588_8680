@@ -3,9 +3,12 @@ package geometries;
 import primitives.Point;
 import primitives.Vector;
 
+/**
+ * this class represent a plane defined by a point in space and a vertical vector
+ */
 public class Plane implements Geometry {
-    private Point q0;
-    private Vector normal;
+    final private Point q0;
+    final private Vector normal;
 
 
     /**
@@ -19,12 +22,12 @@ public class Plane implements Geometry {
 
     /**
      * constructor
-     * @param point point 1
+     * @param point1 point 1
      * @param point2 point 2
      * @param point3 point 3
      */
-    public Plane(Point point, Point point2, Point point3) {
-        q0 = point;
+    public Plane(Point point1, Point point2, Point point3) {
+        q0 = point1;
         normal = null;
     }
 

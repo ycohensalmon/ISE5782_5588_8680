@@ -2,16 +2,18 @@ package primitives;
 import static primitives.Util.*;
 import java.lang.*;
 
+/**
+ * This class does operations on vectors
+ */
 public class Vector extends Point{
     /**
      * constructor
-     * @param i coordinate value for i axis
-     * @param j coordinate value for j axis
-     * @param k coordinate value for k axis
+     * @param x coordinate value for x axis
+     * @param y coordinate value for y axis
+     * @param z coordinate value for z axis
      */
-    public Vector(double i, double j, double k) {
-        super(i, j, k);
-        if (Double3.ZERO.equals(xyz)) throw new IllegalArgumentException("ERROR: zero vector");
+    public Vector(double x, double y, double z) {
+        super(x, y, z);
     }
 
     /**
@@ -20,7 +22,6 @@ public class Vector extends Point{
      */
     public Vector(Double3 xyz) {
         super(xyz);
-        if (Double3.ZERO.equals(xyz)) throw new IllegalArgumentException("ERROR: zero vector");
     }
 
     /**
@@ -44,7 +45,12 @@ public class Vector extends Point{
         return result.d1+result.d2+result.d3;
     }
 
+    /**
+     * A normalization operation
+     * @return a new vector normalized in the same direction as the original vector
+     */
     public Vector normalize() { return new Vector(xyz.reduce(this.length())); }
+
     /**
      * calculating the length of vector
      * @return euclidean length squared of the vector
@@ -54,16 +60,11 @@ public class Vector extends Point{
     }
 
     /**
-     *calculating the length of vector by Pythagoras
+     * Calculating the length of vector by Pythagoras
      * @return the length of this vector
      */
     public double length() {
         return Math.sqrt(lengthSquared());
-    }
-
-    public Vector subtract(Point point) {
-        Vector result= super.subtract(point);
-        return result;
     }
 
     /**
@@ -87,7 +88,6 @@ public class Vector extends Point{
         double d1 = xyz.d2 * v.xyz.d3 - xyz.d3 * v.xyz.d2;
         double d2 = xyz.d1 * v.xyz.d3 - xyz.d3 * v.xyz.d1;
         double d3 = xyz.d1 * v.xyz.d2 - xyz.d2 * v.xyz.d1;
-        if (d1 == 0 && d2 == 0 && d3 == 0) throw new IllegalArgumentException("ERROR: zero vector");
         return new Vector(d1,d2,d3);
     }
 
@@ -102,10 +102,9 @@ public class Vector extends Point{
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof Vector))
+		if (!(obj instanceof Vector other))
 			return false;
-            Vector other = (Vector) obj;
-		return isZero(xyz.d1 - other.xyz.d1) && isZero(xyz.d2 - other.xyz.d2) && isZero(xyz.d3 - other.xyz.d3);
+        return super.equals(other);
 	}
 
     /**

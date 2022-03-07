@@ -4,15 +4,18 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+/**
+ * this class represent cylinder defined by like tube (ray and radius) and also with height
+ */
 public class Cylinder extends Tube{
 
-    private  double height;
+    final private double height;
 
     /**
      * constructor
-     * @param axisRay ray
-     * @param radius
-     * @param height
+     * @param axisRay the ray
+     * @param radius the radius
+     * @param height the height
      */
     public Cylinder(Ray axisRay, double radius, double height) {
         super(axisRay, radius);
