@@ -19,9 +19,9 @@ public class Plane implements Geometry {
 
     /**
      * constructor
-     * @param p1 point 1
-     * @param p2 point 2
-     * @param p3 point 3
+     * @param point point 1
+     * @param point2 point 2
+     * @param point3 point 3
      */
     public Plane(Point point, Point point2, Point point3) {
         q0 = point;
@@ -30,8 +30,8 @@ public class Plane implements Geometry {
 
     /**
      * constructor
-     * @param q0 point
-     * @param normal vector of normal
+     * @param point point
+     * @param vector vector of normal
      */
     public Plane(Point point, Vector vector) {
         normal = vector.normalize();

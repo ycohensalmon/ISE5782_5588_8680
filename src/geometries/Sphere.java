@@ -47,7 +47,7 @@ public class Sphere implements Geometry {
 
     /**
      * calculating the normal of sphere
-     * @param Point should be null for flat geometries
+     * @param p should be null for flat geometries
      * @return the noemal
      */
     @Override

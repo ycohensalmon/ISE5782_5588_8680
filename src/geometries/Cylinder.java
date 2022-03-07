@@ -42,7 +42,7 @@ public class Cylinder extends Tube{
 
     /**
      * calculating the normal of cylinder
-     * @param point should be null for flat geometries
+     * @param p should be null for flat geometries
      * @return vector of this normal
      */
     @Override
