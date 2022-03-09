@@ -31,8 +31,7 @@ public class Vector extends Point{
      * @return result of scale in vector
      */
     public Vector scale(double scalar){
-        Double3 result = xyz.scale(scalar);
-        return new Vector(result);
+        return new Vector(xyz.scale(scalar));
     }
 
     /**
@@ -42,7 +41,7 @@ public class Vector extends Point{
      */
     public double dotProduct(Vector v){
         Double3 result = xyz.product(v.xyz);
-        return result.d1+result.d2+result.d3;
+        return result.d1 + result.d2 + result.d3;
     }
 
     /**
@@ -74,8 +73,7 @@ public class Vector extends Point{
      * @return algebraic added vector
      */
     public Vector add(Vector other) {
-        Point result = super.add(other);
-        return new Vector(result.xyz);
+        return new Vector(super.add(other).xyz);
     }
 
 
@@ -88,7 +86,7 @@ public class Vector extends Point{
         double d1 = xyz.d2 * v.xyz.d3 - xyz.d3 * v.xyz.d2;
         double d2 = xyz.d1 * v.xyz.d3 - xyz.d3 * v.xyz.d1;
         double d3 = xyz.d1 * v.xyz.d2 - xyz.d2 * v.xyz.d1;
-        return new Vector(d1,d2,d3);
+        return new Vector(d1,-d2,d3);
     }
 
     /**

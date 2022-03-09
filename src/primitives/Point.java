@@ -16,7 +16,7 @@ public class Point {
      * @param z third number value
      */
     public Point(double x, double y, double z) {
-        xyz = new Double3(x, y, z);
+       this(new Double3(x, y, z));
     }
 
     /**
