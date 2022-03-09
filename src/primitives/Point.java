@@ -7,7 +7,7 @@ import java.lang.*;
  */
 public class Point {
 
-    protected final Double3 xyz;
+    final Double3 xyz;
 
     /**
      * constructor
@@ -24,7 +24,6 @@ public class Point {
      * @param xyz the xyz value
      */
     public Point(Double3 xyz) {
-        if (Double3.ZERO.equals(xyz)) throw new IllegalArgumentException("ERROR: zero vector");
         this.xyz = xyz;
     }
 

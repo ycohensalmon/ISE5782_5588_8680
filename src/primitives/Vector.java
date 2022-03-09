@@ -14,6 +14,7 @@ public class Vector extends Point{
      */
     public Vector(double x, double y, double z) {
         super(x, y, z);
+        if (Double3.ZERO.equals(xyz)) throw new IllegalArgumentException("ERROR: zero vector");
     }
 
     /**
@@ -31,6 +32,7 @@ public class Vector extends Point{
      * @return result of scale in vector
      */
     public Vector scale(double scalar){
+        if (scalar == 0) throw new IllegalArgumentException("it's not possible to scale by 0");
         return new Vector(xyz.scale(scalar));
     }
 

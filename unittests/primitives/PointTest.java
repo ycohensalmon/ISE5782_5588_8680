@@ -14,6 +14,7 @@ class PointTest {
      */
     @Test
      void add() {
+        fail("Not yet implemented");
 
     }
 
