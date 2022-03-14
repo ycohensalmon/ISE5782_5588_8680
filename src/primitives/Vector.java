@@ -23,6 +23,7 @@ public class Vector extends Point{
      */
     public Vector(Double3 xyz) {
         super(xyz);
+        if (Double3.ZERO.equals(xyz)) throw new IllegalArgumentException("ERROR: zero vector");
     }
 
     /**

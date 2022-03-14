@@ -1,16 +1,12 @@
-package primitives;
+package geometries;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RayTest {
+class CylinderTest {
 
     @Test
-    void getP0() {
-    }
-
-    @Test
-    void getDir() {
+    void getNormal() {
     }
 }
