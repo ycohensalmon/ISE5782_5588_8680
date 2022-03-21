@@ -1,7 +1,10 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 /**
  * this class represent a plane defined by a point in space and a vertical vector
@@ -67,5 +70,10 @@ public class Plane implements Geometry {
                 "q0=" + q0 +
                 ", normal=" + normal +
                 '}';
+    }
+
+    @Override
+    public List<Point> findIntsersections(Ray ray) {
+        return null;
     }
 }

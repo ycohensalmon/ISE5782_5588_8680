@@ -1,7 +1,10 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 /**
  * This class represent a sphere like a ball and defined by point and radius
@@ -56,5 +59,10 @@ public class Sphere implements Geometry {
     @Override
     public Vector getNormal(Point p) {
         return p.subtract(center).normalize();
+    }
+
+    @Override
+    public List<Point> findIntsersections(Ray ray) {
+        return null;
     }
 }

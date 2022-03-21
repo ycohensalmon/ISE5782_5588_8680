@@ -14,7 +14,7 @@ public class PolygonTest {
     /**
      * Test method for {@link geometries.Polygon#Polygon(Point...)}.
      */
-    @Test // IMPORTANT !!! - tests on this constructor doesn't work because in the constructor of plane the normal = null
+    @Test
     public void testConstructor() {
         // ============ Equivalence Partitions Tests ==============
 

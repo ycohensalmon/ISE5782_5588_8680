@@ -4,6 +4,8 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+
 import static primitives.Util.isZero;
 
 /**
@@ -57,5 +59,10 @@ public class Tube implements Geometry {
         //getDir return normalized vector, so we don't need to divide by its length
         Vector projection= axisRay.getDir().scale(t);
         return p.subtract(axisRay.getP0().add(projection)).normalize();
+    }
+
+    @Override
+    public List<Point> findIntsersections(Ray ray) {
+        return null;
     }
 }

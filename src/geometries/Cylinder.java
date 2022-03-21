@@ -4,6 +4,8 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+
 /**
  * this class represent cylinder defined by like tube (ray and radius) and also with height
  */
@@ -50,6 +52,11 @@ public class Cylinder extends Tube{
      */
     @Override
     public Vector getNormal(Point p) {
+        return null;
+    }
+
+    @Override
+    public List<Point> findIntsersections(Ray ray) {
         return null;
     }
 }
