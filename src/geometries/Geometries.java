@@ -14,7 +14,7 @@ public class Geometries implements Intersectable{
      * @return
      */
     @Override
-    public List findIntsersections(Ray ray) {
+    public List<Point> findIntersections(Ray ray) {
         return null;
     }
 }
