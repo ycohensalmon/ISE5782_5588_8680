@@ -10,7 +10,7 @@ import java.util.List;
  * this class represent a plane defined by a point in space and a vertical vector
  */
 public class Plane implements Geometry {
-    final private Point q0;
+    final private Point p0;
     final private Vector normal;
 
 
@@ -30,7 +30,7 @@ public class Plane implements Geometry {
      * @param point3 point 3
      */
     public Plane(Point point1, Point point2, Point point3) {
-        q0= point1;
+        p0= point1;
         Vector v1 = point2.subtract(point1);
         Vector v2 = point3.subtract(point1);
         normal= v1.crossProduct(v2).normalize();
@@ -43,14 +43,14 @@ public class Plane implements Geometry {
      */
     public Plane(Point point, Vector vector) {
         normal = vector.normalize();
-        q0 = point;
+        p0 = point;
     }
 
     /**
      * getting q0
      * @return this point
      */
-    public Point getQ0() { return this.q0; }
+    public Point getP0() { return this.p0; }
 
     /**
      * getting normal
@@ -67,7 +67,7 @@ public class Plane implements Geometry {
     @Override
     public String toString() {
         return "Plane{" +
-                "q0=" + q0 +
+                "p0=" + p0 +
                 ", normal=" + normal +
                 '}';
     }
