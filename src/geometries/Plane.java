@@ -81,7 +81,7 @@ public class Plane implements Geometry {
      * @return immutable list of intersection points {@link Point}
      */
     @Override
-    public List<Point> findIntsersections(Ray ray) {
+    public List<Point> findIntersections(Ray ray) {
         Point p0 = ray.getP0();
         Vector v = ray.getDir();
         Vector n = normal;
@@ -93,7 +93,7 @@ public class Plane implements Geometry {
         double nQMinusP0 = n.dotProduct(q0.subtract(p0));
         double t = alignZero(nQMinusP0 / nv);
         if (t > 0){
-            Point p = p0.add(v.scale(t));
+            Point p = ray.getPoint(t);
             return List.of(p);
         }
         //t<=0

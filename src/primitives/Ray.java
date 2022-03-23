@@ -30,6 +30,15 @@ public class Ray {
     public Vector getDir() { return dir; }
 
     /**
+     * The function returns the calculation of the pont on the ray
+     * @param t scalar
+     * @return p0 + v*t
+     */
+    public Point getPoint(double t){
+        return p0.add(dir.scale(t));
+    }
+
+    /**
      * equalsing between two objects
      * @param obj Object (basicaly another Point3d) to compare
      * @return true or false accordingly

@@ -38,12 +38,17 @@ public class Geometries implements Intersectable{
         this.geometries.addAll(Arrays.asList(geometries));
     }
 
-    /**
-     * @param ray
-     * @return
-     */
+
     @Override
     public List<Point> findIntersections(Ray ray) {
-        return null;
-    }
-}
+        List<Point> result= new LinkedList<Point>();
+        for(Intersectable item: geometries)
+        {
+            List<Point> itemResult= item.findIntersections(ray);
+            if (itemResult!= null)
+                result.addAll(itemResult);
+        }
+        if(result.isEmpty())
+            return null;
+        return result;
+    }}
