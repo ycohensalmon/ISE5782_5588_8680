@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for geometries.Sphere class
- * @author Elhanan Tweig & Yosef Cohen
+ * @author Elhanan Tweig & Yossef Cohen-Salmon
  */
 class SphereTest {
 
@@ -27,6 +27,9 @@ class SphereTest {
         assertEquals(sp.getNormal(new Point(0,0,1)), new Vector(0,0,1), "Sphere.getNormal() gives wrong normal.");
     }
 
+    /**
+     * Test method for {@link Sphere#findIntersections(Ray)}.
+     */
     @Test
     void findIntersections() {
         Sphere sphere = new Sphere(new Point(-3,0,0), 1);
@@ -38,11 +41,11 @@ class SphereTest {
 
         // TC02: Ray intersects the sphere twice.
         ray = new Ray(new Point(3,0,0),new Vector(-1,0,0));
-        List<Point> expRes = List.of(new Point(-4,0,0), new Point(-2,0,0));
+        List<Point> expRes = List.of(new Point(-2,0,0), new Point(-4,0,0));
         List<Point> res = sphere.findIntersections(ray);
-        if (res.get(0).getX() > res.get(1).getX())
-            res = List.of(res.get(1), res.get(0));
         assertEquals(res.size(), 2, "Ray intersects sphere twice EP doesn't work.");
+        if (res.get(0).getX() < res.get(1).getX())
+            res = List.of(res.get(1), res.get(0));
         assertEquals(res, expRes, "Ray intersects sphere twice EP doesn't work.");
 
         // TC03: Ray intersects the sphere from inside the sphere.
@@ -74,11 +77,11 @@ class SphereTest {
         // **** Group: Ray's line goes through the center
         // TC13: Ray starts before the sphere (2 points)
         ray = new Ray(new Point(-5,0,0),new Vector(1,0,0));
-        expRes = List.of(new Point(-2,0,0), new Point(-4,0,0));
+        expRes = List.of(new Point(-4,0,0), new Point(-2,0,0));
         res = sphere.findIntersections(ray);
-        if (res.get(0).getX() < res.get(1).getX())
-            res = List.of(res.get(1), res.get(0));
         assertEquals(res.size(), 2, "Ray through center 2 points BVA doesn't work.");
+        if (res.get(1).getX() < res.get(0).getX())
+            res = List.of(res.get(1), res.get(0));
         assertEquals(expRes, res, "Ray through center 2 points BVA doesn't work.");
 
         // TC14: Ray starts at sphere and goes inside (1 points)

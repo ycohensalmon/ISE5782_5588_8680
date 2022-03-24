@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for geometries.Triangle class
- * @author Tweig Elhanan and Cohen Yossef
+ * @author Tweig Elhanan & Yossef Cohen-Salmon
  */
 class TriangleTest {
 
@@ -24,6 +24,9 @@ class TriangleTest {
         assertEquals(new Vector(0, 1, 0), tr.getNormal(new Point(0.3, 0, 0.3)), "Bad normal to triangle");
     }
 
+    /**
+     * Test method for {@link Triangle#findIntersections(Ray)}
+     */
     @Test
     void findIntersections() {
         Triangle triangle = new Triangle(new Point(1,0,0), new Point(0,1,0),new Point(0,0,0));

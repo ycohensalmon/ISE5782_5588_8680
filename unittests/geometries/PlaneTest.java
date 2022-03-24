@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for geometries.Plane class
- * @author Elhanan Tweig & Yossef Cohen
+ * @author Elhanan Tweig & Yossef Cohen-Salmon
  */
 class PlaneTest {
 
@@ -93,7 +93,7 @@ class PlaneTest {
         assertNull(plane.findIntersections(ray), "Ray is orthogonal to the plane and after the plane BVA doesn't work.");
 
         // TC16: Ray begins in the same point which appears as the plane's reference point.
-        ray = new Ray(plane.getQ0(), new Vector(1,1,1));
+        ray = new Ray(plane.getQ0(), new Vector(1,1,0));
         assertNull(plane.findIntersections(ray), "Ray begins in the same point which appears as the plane's reference point BVA doesn't work.");
 
         // TC17: Ray begins in the same plane but the ray it's not parallel or orthogonal to the plane
