@@ -60,21 +60,21 @@ public class Sphere implements Geometry {
     public Vector getNormal(Point p) {
         return p.subtract(center).normalize();
     }
-    
+
     @Override
     public List<Point> findIntersections(Ray ray) {
-        Point P0 = ray.getP0();
+        Point p0 = ray.getP0();
         Vector v = ray.getDir();
 
-        Vector U;
+        Vector u;
         try {
-            U = center.subtract(P0);
+            u = center.subtract(p0);
         } catch (IllegalArgumentException ignore) {
             return List.of(ray.getPoint(radius));
         }
 
-        double tm = alignZero(v.dotProduct(U));
-        double dSqr = alignZero(U.lengthSquared() - tm * tm);
+        double tm = alignZero(v.dotProduct(u));
+        double dSqr = alignZero(u.lengthSquared() - tm * tm);
         double thSqr = radiusSqr - dSqr;
         // no intersections : the ray direction is above the sphere
         if (alignZero(thSqr) <= 0) return null;
