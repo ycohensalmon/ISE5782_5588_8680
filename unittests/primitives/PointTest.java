@@ -7,6 +7,7 @@ import static primitives.Util.isZero;
 
 /**
  * Unit tests for primitives.Point class
+ *
  * @author Tweig Elhanan and Cohen Yossef
  */
 class PointTest {
@@ -21,7 +22,7 @@ class PointTest {
         // TC01: Test that add is proper.
         Vector v1 = new Vector(0, 2, -1);
         Point res = new Point(1, 4, 2);
-        assertEquals(p1.add(v1),res, "add method failed");
+        assertEquals(p1.add(v1), res, "add method failed");
     }
 
     /**
@@ -33,7 +34,7 @@ class PointTest {
         // TC01: Test that subtract is proper.
         Point p2 = new Point(0, 2, -1);
         Vector res = new Vector(1, 0, 4);
-        assertEquals(p1.subtract(p2),res, "subtract method failed");
+        assertEquals(p1.subtract(p2), res, "subtract method failed");
 
         // =============== Boundary Values Tests ==================
         //TC11: Test p1 minus p1 throw exception
@@ -48,7 +49,7 @@ class PointTest {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Test that distance squared is proper.
         Point p2 = new Point(0, 2, -1);
-        assertTrue(isZero(p1.distanceSquared(p2) -17), "distanceSquared method failed");
+        assertEquals(17, p1.distanceSquared(p2), 0.0000001, "distanceSquared method failed");
     }
 
     /**
@@ -59,6 +60,6 @@ class PointTest {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Test that distance is proper.
         Point p2 = new Point(5, -2, 1);
-        assertTrue(isZero(p1.distance(p2)-6), "distanceSquared method failed");
+        assertTrue(isZero(p1.distance(p2) - 6), "distanceSquared method failed");
     }
 }

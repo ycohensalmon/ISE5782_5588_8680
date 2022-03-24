@@ -51,14 +51,13 @@ class VectorTest {
     @Test
     void normalize() {
         Vector v = new Vector(1, 2, 3);
-        Vector u = v.normalize();
 
         // ============ Equivalence Partitions Tests ==============
         // TC01: Test that normalize create a unit vector
+        Vector u = v.normalize();
         assertEquals(u.length(),1.0, "ERROR: the normalized vector is not a unit vector");
-
-        // TC02: Test that the vectors are co-lined
         assertThrows(IllegalArgumentException.class, () -> v.crossProduct(u), "ERROR: the normalized vector is not parallel to the original one");
+        assertEquals(v.length(), v.dotProduct(u), 0.0000001, "ERROR: the normalized vector is not parallel to the original one");
     }
 
     /**

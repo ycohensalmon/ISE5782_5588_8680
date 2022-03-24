@@ -14,19 +14,23 @@ import static primitives.Util.alignZero;
 public class Sphere implements Geometry {
     final private Point center;
     final private double radius;
+    final private double radiusSqr;
 
     /**
      * constructor
+     *
      * @param center point
      * @param radius radius of sphere
      */
     public Sphere(Point center, double radius) {
         this.center = center;
         this.radius = radius;
+        this.radiusSqr = radius * radius;
     }
 
     /**
      * getting center
+     *
      * @return center of sphere
      */
     public Point getCenter() {
@@ -35,6 +39,7 @@ public class Sphere implements Geometry {
 
     /**
      * getting radius
+     *
      * @return radius of sphere
      */
     public double getRadius() {
@@ -43,6 +48,7 @@ public class Sphere implements Geometry {
 
     /**
      * to string
+     *
      * @return values of sphere
      */
     @Override
@@ -55,6 +61,7 @@ public class Sphere implements Geometry {
 
     /**
      * calculating the normal of sphere
+     *
      * @param p should be null for flat geometries
      * @return the noemal
      */
@@ -66,6 +73,7 @@ public class Sphere implements Geometry {
     /**
      * find all intersection points {@link Point}
      * that intersect with a specific ray{@link Ray}
+     *
      * @param ray ray pointing towards the sphere
      * @return immutable list of intersection points {@link Point}
      */
@@ -74,36 +82,25 @@ public class Sphere implements Geometry {
         Point P0 = ray.getP0();
         Vector v = ray.getDir();
 
-        if (P0.equals(center)) {
-            return List.of(center.add(v.scale(radius)));
+        Vector U;
+        try {
+            U = center.subtract(P0);
+        } catch (IllegalArgumentException ignore) {
+            return List.of(ray.getPoint(radius));
         }
 
-        Vector U = center.subtract(P0);
         double tm = alignZero(v.dotProduct(U));
-        double d = alignZero(Math.sqrt(U.lengthSquared() - tm * tm));
-
+        double dSqr = alignZero(U.lengthSquared() - tm * tm);
+        double thSqr = radiusSqr - dSqr;
         // no intersections : the ray direction is above the sphere
-        if (d >= radius) {
-            return null;
-        }
+        if (alignZero(thSqr) <= 0) return null;
 
-        double th = alignZero(Math.sqrt(radius * radius - d * d));
-        double t1 = alignZero(tm - th);
+        double th = alignZero(Math.sqrt(thSqr));
+
         double t2 = alignZero(tm + th);
+        if (t2 <= 0) return null;
 
-        if (t1 > 0 && t2 > 0) {
-            Point P1 = ray.getPoint(t1);
-            Point P2 = ray.getPoint(t2);
-            return List.of(P1, P2);
-        }
-        if (t1 > 0) {
-            Point P1 = ray.getPoint(t1);
-            return List.of(P1);
-        }
-        if (t2 > 0) {
-            Point P2 = ray.getPoint(t2);
-            return List.of(P2);
-        }
-        return null;
+        double t1 = alignZero(tm - th);
+        return t1 <= 0 ? List.of(ray.getPoint(t2)) : List.of(ray.getPoint(t1), ray.getPoint(t2));
     }
 }

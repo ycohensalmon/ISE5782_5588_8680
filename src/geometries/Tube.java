@@ -17,8 +17,9 @@ public class Tube implements Geometry {
 
     /**
      * constructor
+     *
      * @param axisRay the ray
-     * @param radius the radius
+     * @param radius  the radius
      */
     public Tube(Ray axisRay, double radius) {
         this.axisRay = axisRay;
@@ -27,6 +28,7 @@ public class Tube implements Geometry {
 
     /**
      * get the ray
+     *
      * @return the ray
      */
     public Ray getAxisRay() {
@@ -35,6 +37,7 @@ public class Tube implements Geometry {
 
     /**
      * get the radius
+     *
      * @return the radius
      */
     public double getRadius() {
@@ -51,14 +54,8 @@ public class Tube implements Geometry {
 
     @Override
     public Vector getNormal(Point p) {
-        double t= axisRay.getDir().dotProduct(p.subtract(axisRay.getP0()));
-        if (isZero(t))
-            return p.subtract(axisRay.getP0()).normalize();
-
-        //calculate the projection of the vector from p to p0 on ray
-        //getDir return normalized vector, so we don't need to divide by its length
-        Vector projection= axisRay.getDir().scale(t);
-        return p.subtract(axisRay.getP0().add(projection)).normalize();
+        double t = axisRay.getDir().dotProduct(p.subtract(axisRay.getP0()));
+        return p.subtract(axisRay.getPoint(t)).normalize();
     }
 
     @Override

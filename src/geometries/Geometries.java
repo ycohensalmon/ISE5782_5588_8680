@@ -10,45 +10,45 @@ import java.util.List;
 /**
  * Geometries class represents a list of shapes of all kinds
  */
-public class Geometries implements Intersectable{
+public class Geometries implements Intersectable {
 
-    List<Intersectable> geometries;
+    private final List<Intersectable> geometries = new LinkedList<>();
 
     /**
      * constructor for list of geometries
      */
     public Geometries() {
-        this.geometries = new LinkedList<>();
     }
 
     /**
      * constructor for list of geometries
+     *
      * @param geometries list of shapes of all kinds
      */
     public Geometries(Intersectable... geometries) {
-        this.geometries = new LinkedList<>();
         this.add(geometries);
     }
 
     /**
      * adds geometries to list
+     *
      * @param geometries list of shapes of all kinds
      */
-    public void add(Intersectable... geometries){
-        this.geometries.addAll(Arrays.asList(geometries));
+    public void add(Intersectable... geometries) {
+        this.geometries.addAll(List.of(geometries));
     }
 
 
     @Override
     public List<Point> findIntersections(Ray ray) {
-        List<Point> result= new LinkedList<Point>();
-        for(Intersectable item: geometries)
-        {
-            List<Point> itemResult= item.findIntersections(ray);
-            if (itemResult!= null)
+        List<Point> result = null;
+        for (Intersectable item : geometries) {
+            List<Point> itemResult = item.findIntersections(ray);
+            if (itemResult != null) {
+                if (result == null) result = new LinkedList<>();
                 result.addAll(itemResult);
+            }
         }
-        if(result.isEmpty())
-            return null;
         return result;
-    }}
+    }
+}
