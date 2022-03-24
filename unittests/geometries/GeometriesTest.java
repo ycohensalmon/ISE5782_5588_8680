@@ -6,9 +6,14 @@ import primitives.Ray;
 import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * Unit tests for geometries.Geometries class
+ */
 class GeometriesTest {
 
+    /**
+     * Test method for {@link Geometries#findIntersections(Ray)} (Ray)}.
+     */
     @Test
     void findIntersections() {
         Triangle triangle = new Triangle(new Point(0.81486,1.38087,0), new Point(0.95156,4.48537,0), new Point(-0.88168,4.58488,0));
