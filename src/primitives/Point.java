@@ -38,6 +38,30 @@ public class Point {
     }
 
     /**
+     * Getter for x coordinate
+     * @return The x coordinate
+     */
+    public double getX() {
+        return xyz.d1;
+    }
+
+    /**
+     * Getter for y coordinate
+     * @return The y coordinate
+     */
+    public double getY() {
+        return xyz.d2;
+    }
+
+    /**
+     * Getter for z coordinate
+     * @return The z coordinate
+     */
+    public double getZ() {
+        return xyz.d3;
+    }
+
+    /**
      * the function calculates point minus point
      * @param point the point that we want to subtract
      * @return new point of the result

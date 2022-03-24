@@ -40,6 +40,8 @@ class SphereTest {
         ray = new Ray(new Point(3,0,0),new Vector(-1,0,0));
         List<Point> expRes = List.of(new Point(-4,0,0), new Point(-2,0,0));
         List<Point> res = sphere.findIntersections(ray);
+        if (res.get(0).getX() > res.get(1).getX())
+            res = List.of(res.get(1), res.get(0));
         assertEquals(res.size(), 2, "Ray intersects sphere twice EP doesn't work.");
         assertEquals(res, expRes, "Ray intersects sphere twice EP doesn't work.");
 
@@ -74,6 +76,8 @@ class SphereTest {
         ray = new Ray(new Point(-5,0,0),new Vector(1,0,0));
         expRes = List.of(new Point(-2,0,0), new Point(-4,0,0));
         res = sphere.findIntersections(ray);
+        if (res.get(0).getX() < res.get(1).getX())
+            res = List.of(res.get(1), res.get(0));
         assertEquals(res.size(), 2, "Ray through center 2 points BVA doesn't work.");
         assertEquals(expRes, res, "Ray through center 2 points BVA doesn't work.");
 
