@@ -7,6 +7,8 @@ import java.util.List;
 /**
  * Common interface for all graphic objects
  * that intersect with a ray{@link Ray}
+ *
+ * @author Elhanan Tweig & Yossef Cohen-Salmon
  */
 public interface Intersectable {
     /**

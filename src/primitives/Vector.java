@@ -6,23 +6,25 @@ import java.lang.*;
 
 /**
  * This class does operations on vectors
+ *
+ * @author Elhanan Tweig & Yossef Cohen-Salmon
  */
 public class Vector extends Point {
     /**
-     * constructor
+     * constructor for the vector
      *
-     * @param x coordinate value for x axis
-     * @param y coordinate value for y axis
-     * @param z coordinate value for z axis
+     * @param x coordinate for x axis
+     * @param y coordinate for y axis
+     * @param z coordinate for z axis
      */
     public Vector(double x, double y, double z) {
         this(new Double3(x, y, z));
     }
 
     /**
-     * constructor
+     * constructor for the vector
      *
-     * @param xyz value of double3
+     * @param xyz value of 3 coordinate
      */
     Vector(Double3 xyz) {
         super(xyz);
@@ -101,12 +103,6 @@ public class Vector extends Point {
         return new Vector(d1, -d2, d3);
     }
 
-    /**
-     * equalsing between two objects
-     *
-     * @param obj Object (basicaly another Point3d) to compare
-     * @return true or false accordingly
-     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -118,11 +114,6 @@ public class Vector extends Point {
         return super.equals(other);
     }
 
-    /**
-     * to string
-     *
-     * @return value of vector
-     */
     @Override
     public String toString() {
         return ">" + super.toString();

@@ -10,6 +10,8 @@ import static primitives.Util.*;
 
 /**
  * this class represent a plane defined by a point in space and a vertical vector
+ *
+ * @author Elhanan Tweig & Yossef Cohen-Salmon
  */
 public class Plane implements Geometry {
     final private Point q0;
@@ -27,7 +29,7 @@ public class Plane implements Geometry {
     }
 
     /**
-     * constructor
+     * constructor for plane by 3 points
      *
      * @param point1 point 1
      * @param point2 point 2
@@ -42,7 +44,7 @@ public class Plane implements Geometry {
     }
 
     /**
-     * constructor
+     * constructor for plane by point and vector
      *
      * @param point  point
      * @param vector vector of normal
@@ -70,11 +72,6 @@ public class Plane implements Geometry {
         return this.normal;
     }
 
-    /**
-     * to string
-     *
-     * @return values of plane
-     */
     @Override
     public String toString() {
         return "Plane{" +
@@ -82,14 +79,7 @@ public class Plane implements Geometry {
                 ", normal=" + normal +
                 '}';
     }
-
-    /**
-     * find all intersection points {@link Point}
-     * that intersect with a specific ray{@link Ray}
-     *
-     * @param ray ray pointing towards the plane
-     * @return immutable list of intersection points {@link Point}
-     */
+    
     @Override
     public List<Point> findIntersections(Ray ray) {
         Point p0 = ray.getP0();

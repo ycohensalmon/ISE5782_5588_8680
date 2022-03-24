@@ -10,6 +10,8 @@ import static primitives.Util.alignZero;
 
 /**
  * This class represent a sphere like a ball and defined by point and radius
+ *
+ * @author Elhanan Tweig & Yossef Cohen-Salmon
  */
 public class Sphere implements Geometry {
     final private Point center;
@@ -17,7 +19,7 @@ public class Sphere implements Geometry {
     final private double radiusSqr;
 
     /**
-     * constructor
+     * constructor for sphere by point and radius
      *
      * @param center point
      * @param radius radius of sphere
@@ -46,11 +48,6 @@ public class Sphere implements Geometry {
         return radius;
     }
 
-    /**
-     * to string
-     *
-     * @return values of sphere
-     */
     @Override
     public String toString() {
         return "Sphere{" +
@@ -59,24 +56,11 @@ public class Sphere implements Geometry {
                 '}';
     }
 
-    /**
-     * calculating the normal of sphere
-     *
-     * @param p should be null for flat geometries
-     * @return the noemal
-     */
     @Override
     public Vector getNormal(Point p) {
         return p.subtract(center).normalize();
     }
-
-    /**
-     * find all intersection points {@link Point}
-     * that intersect with a specific ray{@link Ray}
-     *
-     * @param ray ray pointing towards the sphere
-     * @return immutable list of intersection points {@link Point}
-     */
+    
     @Override
     public List<Point> findIntersections(Ray ray) {
         Point P0 = ray.getP0();

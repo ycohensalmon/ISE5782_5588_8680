@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * the interface of all the geometry classs
+ *
+ * @author Elhanan Tweig & Yossef Cohen-Salmon
  */
 public interface Geometry extends Intersectable{
     /**

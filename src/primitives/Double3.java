@@ -3,6 +3,8 @@ import static primitives.Util.*;
 
 /**
  * This class will serve all primitive classes based on three numbers
+ *
+ * @author Elhanan Tweig & Yossef Cohen-Salmon
  */
 class Double3 {
 	final double d1;
@@ -25,28 +27,6 @@ class Double3 {
 		this.d1 = d1;
 		this.d2 = d2;
 		this.d3 = d3;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Double3))
-			return false;
-		Double3 other = (Double3) obj;
-		return isZero(d1 - other.d1) && isZero(d2 - other.d2) && isZero(d3 - other.d3);
-	}
-
-	@Override
-	public int hashCode() {
-		return (int) Math.round(d1 + d2 + d3);
-	}
-
-	@Override
-	public String toString() {
-		return "(" + d1 + "," + d2 + "," + d3 + ")\n";
 	}
 
 	/**
@@ -102,6 +82,28 @@ class Double3 {
 	 */
 	Double3 product(Double3 rhs) {
 		return new Double3(d1 * rhs.d1, d2 * rhs.d2, d3 * rhs.d3);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Double3))
+			return false;
+		Double3 other = (Double3) obj;
+		return isZero(d1 - other.d1) && isZero(d2 - other.d2) && isZero(d3 - other.d3);
+	}
+
+	@Override
+	public int hashCode() {
+		return (int) Math.round(d1 + d2 + d3);
+	}
+
+	@Override
+	public String toString() {
+		return "(" + d1 + "," + d2 + "," + d3 + ")\n";
 	}
 
 }
