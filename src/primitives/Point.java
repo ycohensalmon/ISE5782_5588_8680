@@ -6,24 +6,26 @@ import java.lang.*;
 
 /**
  * this class serve a point with 3 coordinates, contains an object of three numbers of type Double3
+ *
+ * @author Elhanan Tweig & Yossef Cohen-Salmon
  */
 public class Point {
 
-    final Double3 xyz;
+    protected Double3 xyz;
 
     /**
-     * constructor
+     * constructor for the 3 coordinated
      *
-     * @param x first number value
-     * @param y second number value
-     * @param z third number value
+     * @param x first coordinate value
+     * @param y second coordinate value
+     * @param z third coordinate value
      */
     public Point(double x, double y, double z) {
         this(new Double3(x, y, z));
     }
 
     /**
-     * second constructor
+     * constructor for the 3 coordinated
      *
      * @param xyz the xyz value
      */

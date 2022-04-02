@@ -10,13 +10,15 @@ import static primitives.Util.isZero;
 
 /**
  * this class represents a tube defined by ray and radius
+ *
+ * @author Elhanan Tweig & Yossef Cohen-Salmon
  */
 public class Tube implements Geometry {
     final protected Ray axisRay;
     final protected double radius;
 
     /**
-     * constructor
+     * constructor for Tube by ray and radius
      *
      * @param axisRay the ray
      * @param radius  the radius

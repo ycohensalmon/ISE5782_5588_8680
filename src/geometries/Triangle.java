@@ -10,10 +10,12 @@ import static primitives.Util.alignZero;
 
 /**
  * this class represents a Triangle
+ *
+ * @author Elhanan Tweig & Yossef Cohen-Salmon
  */
 public class Triangle extends Polygon {
     /**
-     * constructor
+     * constructor for triangle by 3 points
      *
      * @param p1 coordinate value for X axis
      * @param p2 coordinate value for Y axis
@@ -23,14 +25,6 @@ public class Triangle extends Polygon {
         super(p1, p2, p3);
     }
 
-
-    /**
-     * find all intersection points {@link Point}
-     * that intersect with a specific ray{@link Ray}
-     *
-     * @param ray ray pointing towards the triangle
-     * @return immutable list of intersection points {@link Point}
-     */
     @Override
     public List<Point> findIntersections(Ray ray) {
         List<Point> result = plane.findIntersections(ray);

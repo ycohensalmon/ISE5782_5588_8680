@@ -8,9 +8,9 @@ import primitives.Vector;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for geometries.Tube class
+ * Unit tests for {@link Tube} class
  *
- * @author Elhanan Tweig & Yosef Cohen
+ * @author Elhanan Tweig & Yossef Cohen-Salmon
  */
 class TubeTest {
 
@@ -27,10 +27,10 @@ class TubeTest {
         boolean secondNormal = new Vector(0, 0, -1).equals(normal);
 
         //TC01: Test that normal is orthogonal to the tube
-        assertEquals(0d, check, "normal is not orthogonal to the tube");
+        assertEquals(0d, check, "TC01: normal is not orthogonal to the tube");
 
         //TC02: Test if the normal is proper
-        assertTrue(firstNormal || secondNormal, "wrong normal to tube");
+        assertTrue(firstNormal || secondNormal, "TC02: wrong normal to tube");
 
         // =============== Boundary Values Tests ==================
         normal = tube.getNormal(new Point(0, 0, 2));
@@ -39,9 +39,9 @@ class TubeTest {
         secondNormal = new Vector(0, 0, -1).equals(normal);
 
         //TC11: Test that normal is orthogonal to the tube
-        assertEquals(0d, check, "normal is not orthogonal to the tube");
+        assertEquals(0d, check, "TC11: normal is not orthogonal to the tube");
 
-        //TC02: Test if the normal is proper
-        assertTrue(firstNormal || secondNormal, "wrong normal to tube");
+        //TC12: Test if the normal is proper
+        assertTrue(firstNormal || secondNormal, "TC12: wrong normal to tube");
     }
 }
