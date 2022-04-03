@@ -60,6 +60,6 @@ class PointTest {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Test that distance is proper.
         Point p2 = new Point(5, -2, 1);
-        assertTrue(isZero(p1.distance(p2) - 6), "TC01: distanceSquared method failed");
+        assertEquals(p1.distance(p2), 6, "TC01: distanceSquared method failed");
     }
 }

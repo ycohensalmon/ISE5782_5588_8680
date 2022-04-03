@@ -14,7 +14,7 @@ public class Point {
     protected Double3 xyz;
 
     /**
-     * constructor for the 3 coordinated
+     * constructor that gets the 3 coordinated and build point
      *
      * @param x first coordinate value
      * @param y second coordinate value
@@ -25,7 +25,7 @@ public class Point {
     }
 
     /**
-     * constructor for the 3 coordinated
+     * constructor that gets Double3 and build point
      *
      * @param xyz the xyz value
      */
