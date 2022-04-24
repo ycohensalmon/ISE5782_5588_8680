@@ -174,7 +174,7 @@ public class Camera {
         final int nY = imageWriter.getNy();
         for (int i = 0; i < nY; ++i)
             for (int j = 0; j < nX; ++j)
-                castRay(nX, nY, j, i);
+                this.imageWriter.writePixel(j, i, castRay(nX, nY, j, i));
     }
 
     private Color castRay(int nX, int nY, int j, int i) {
