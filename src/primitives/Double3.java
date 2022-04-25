@@ -6,7 +6,7 @@ import static primitives.Util.*;
  *
  * @author Elhanan Tweig & Yossef Cohen-Salmon
  */
-class Double3 {
+public class Double3 {
 	final double d1;
 	final double d2;
 	final double d3;
@@ -14,7 +14,7 @@ class Double3 {
 	/**
 	 * Zero triad (0,0,0)
 	 */
-	static final Double3 ZERO = new Double3(0, 0, 0);
+	public static final Double3 ZERO = new Double3(0, 0, 0);
 
 	/**
 	 * Constructor to initialize Double3 based object with its three number values
@@ -23,7 +23,7 @@ class Double3 {
 	 * @param d2 second number value
 	 * @param d3 third number value
 	 */
-	protected Double3(double d1, double d2, double d3) {
+	public Double3(double d1, double d2, double d3) {
 		this.d1 = d1;
 		this.d2 = d2;
 		this.d3 = d3;

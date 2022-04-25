@@ -12,6 +12,7 @@ import java.lang.*;
 public class Point {
 
     protected Double3 xyz;
+    public static final Point ZERO = new Point(0, 0, 0);
 
     /**
      * constructor that gets the 3 coordinated and build point
