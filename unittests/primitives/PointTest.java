@@ -61,5 +61,7 @@ class PointTest {
         // TC01: Test that distance is proper.
         Point p2 = new Point(5, -2, 1);
         assertEquals(p1.distance(p2), 6, "TC01: distanceSquared method failed");
+        // TC02: Test that distance from a point to itself works right.
+        assertEquals(Math.sqrt(0),p1.distanceSquared(p1),"ERROR: distance() wrong value");
     }
 }
