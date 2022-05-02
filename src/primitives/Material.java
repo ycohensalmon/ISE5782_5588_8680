@@ -4,8 +4,8 @@ package primitives;
  * class foe the material of object represented by its shininess, diffuse and specular
  */
 public class Material {
-    public double kD = 0;
-    public double kS = 0;
+    public Double3 kD = new Double3(0.0);
+    public Double3 kS = new Double3(0.0);
     public int nShininess = 0;
 
     /**
@@ -15,7 +15,7 @@ public class Material {
      * @return the material
      */
     public Material setKd(double kD) {
-        this.kD = kD;
+        this.kD =new Double3(kD);
         return this;
     }
 
@@ -26,7 +26,7 @@ public class Material {
      * @return the material
      */
     public Material setKs(double kS) {
-        this.kS = kS;
+        this.kS = new Double3(kS);
         return this;
     }
 
@@ -48,7 +48,7 @@ public class Material {
      * @return the material
      */
     public Material setKd(Double3 kD) {
-        this.kD = kD.d1;
+        this.kD = kD;
         return this;
     }
 
@@ -59,7 +59,7 @@ public class Material {
      * @return the material
      */
     public Material setKs(Double3 kS) {
-        this.kS = kS.d1;
+        this.kS = kS;
         return this;
     }
 }

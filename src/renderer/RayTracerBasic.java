@@ -1,10 +1,7 @@
 package renderer;
 
 import lighting.LightSource;
-import primitives.Color;
-import primitives.Point;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 import scene.Scene;
 import geometries.Geometries;
 import geometries.Intersectable.GeoPoint;
@@ -54,8 +51,8 @@ public class RayTracerBasic extends RayTracerBase {
         double nv = alignZero(n.dotProduct(v));
         if (nv == 0) return Color.BLACK;
         int nShininess = geoPoint.geometry.getMaterial().nShininess;
-        double kd = geoPoint.geometry.getMaterial().kD;
-        double ks = geoPoint.geometry.getMaterial().kS;
+        Double3 kd = geoPoint.geometry.getMaterial().kD;
+        Double3 ks = geoPoint.geometry.getMaterial().kS;
 
         Color color = Color.BLACK;
         for (LightSource lightSource : scene.lights) {
@@ -81,10 +78,10 @@ public class RayTracerBasic extends RayTracerBase {
      * @param lightIntensity light intensity
      * @return the Specular component at the point
      */
-    private Color calcSpecular(double ks, Vector l, Vector n, double nl, Vector v, int nShininess, Color lightIntensity) {
+    private Color calcSpecular(Double3 ks, Vector l, Vector n, double nl, Vector v, int nShininess, Color lightIntensity) {
         Vector r = l.add(n.scale(-2 * nl));
         double vr = alignZero(v.dotProduct(r));
-        return lightIntensity.scale(ks * Math.pow(Math.max(0, -1 * vr), nShininess));
+        return lightIntensity.scale(ks.scale(Math.pow(Math.max(0, -1 * vr), nShininess)));
     }
 
     /**
@@ -95,8 +92,8 @@ public class RayTracerBasic extends RayTracerBase {
      * @param lightIntensity light intensity
      * @return the diffusive component at the point
      */
-    private Color calcDiffusive(double kd, double nl, Color lightIntensity) {
-        return lightIntensity.scale(Math.abs(nl) * kd);
+    private Color calcDiffusive(Double3 kd, double nl, Color lightIntensity) {
+        return lightIntensity.scale(kd.scale(Math.abs(nl)));
     }
 
     @Override
