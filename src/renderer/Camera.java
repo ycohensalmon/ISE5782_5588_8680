@@ -195,8 +195,11 @@ public class Camera {
         if (imageWriter == null)
             throw new MissingResourceException(RESOURCE, CAMERA_CLASS, IMAGE_WRITER);
 
-        for (int i = 0; i < imageWriter.getNy(); i++) {
-            for (int j = 0; j < imageWriter.getNx(); j++) {
+        final int nX = imageWriter.getNx();
+        final int nY = imageWriter.getNy();
+
+        for (int i = 0; i < nY; i++) {
+            for (int j = 0; j < nX; j++) {
                 if (i % interval == 0 || j % interval == 0) {
                     imageWriter.writePixel(j, i, color);
                 }
