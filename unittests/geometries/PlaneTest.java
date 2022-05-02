@@ -44,12 +44,12 @@ class PlaneTest {
     void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============
         //TC01: Test that the normal is proper
-        Plane pl= new Plane(new Point(0,0,1),new Point(1,0,0),new Point(0,1,0));
-        double sqrt3= Math.sqrt(1d/3);
-        Vector norm=pl.getNormal(new Point(0,0,1));
-        boolean normal1= new Vector(sqrt3,sqrt3,sqrt3).equals(norm);
-        boolean normal2= new Vector(-sqrt3,-sqrt3,-sqrt3).equals(norm);
-        assertTrue(normal1||normal2,"Wrong normal to plane");
+        Plane pl = new Plane(new Point(0, 0, 1), new Point(1, 0, 0), new Point(0, 1, 0));
+        double sqrt3 = Math.sqrt(1d / 3);
+        Vector norm = pl.getNormal(new Point(0, 0, 1));
+        boolean normal1 = new Vector(sqrt3, sqrt3, sqrt3).equals(norm);
+        boolean normal2 = new Vector(-sqrt3, -sqrt3, -sqrt3).equals(norm);
+        assertTrue(normal1 || normal2, "Wrong normal to plane");
     }
 
     /**

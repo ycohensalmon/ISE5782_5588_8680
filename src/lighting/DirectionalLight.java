@@ -6,14 +6,16 @@ import primitives.Vector;
 
 /**
  * class for a direction light without position
+ *
  * @author Elhanan Tweig & Yossef Cohen-Salmon
  */
-public class DirectionalLight extends Light implements LightSource{
+public class DirectionalLight extends Light implements LightSource {
 
     private Vector direction;
 
     /**
-     *constructor of direction light
+     * constructor of direction light
+     *
      * @param intensity=the color of the light
      * @param direction=the direction of the light
      */

@@ -7,6 +7,7 @@ import geometries.*;
 import primitives.*;
 import renderer.*;
 import scene.Scene;
+
 import static java.awt.Color.*;
 
 /**
@@ -29,7 +30,7 @@ public class LightsTests {
             new Point(-110, -110, -150), // the shared left-bottom
             new Point(95, 100, -150), // the shared right-top
             new Point(110, -110, -150), // the right-bottom
-            new Point(-75, 78, 100) }; // the left-top
+            new Point(-75, 78, 100)}; // the left-top
     private Point trPL = new Point(30, 10, -100); // Triangles test Position of Light
     private Point spPL = new Point(-50, -50, 25); // Sphere test Position of Light
     private Color trCL = new Color(800, 500, 250); // Triangles test Color of Light
@@ -167,9 +168,9 @@ public class LightsTests {
      * Produce a picture of a sphere lighted by directional light, point light and spot light
      */
     @Test
-    public void sphereAll(){
-        Point spPL1=new Point(130,0,25);
-        Point spPL2=new Point(-30,100,25);
+    public void sphereAll() {
+        Point spPL1 = new Point(130, 0, 25);
+        Point spPL2 = new Point(-30, 100, 25);
         scene1.geometries.add(sphere);
         scene1.lights.add(new DirectionalLight(spCL, new Vector(1, 1.5, -0.5)));
         scene1.lights.add(new PointLight(spCL, spPL1).setKl(0.0001).setKq(0.0002));
@@ -187,11 +188,11 @@ public class LightsTests {
      * Produce a picture of a two triangle lighted by directional light, point light and spot light
      */
     @Test
-    public void triangleAll(){
-        Vector trDL1=new Vector(-2,-5,-2);
-        Vector trDL2=new Vector(-2,2,2);
-        Point trPL1=new Point(-5,10,30);
-        Point trPL2=new Point(60,55,-125);
+    public void triangleAll() {
+        Vector trDL1 = new Vector(-2, -5, -2);
+        Vector trDL2 = new Vector(-2, 2, 2);
+        Point trPL1 = new Point(-5, 10, 30);
+        Point trPL2 = new Point(60, 55, -125);
         scene2.geometries.add(triangle1, triangle2);
         scene2.lights.add(new DirectionalLight(trCL, trDL1));
         scene2.lights.add(new PointLight(trCL, trPL2).setKl(0.001).setKq(0.0002));

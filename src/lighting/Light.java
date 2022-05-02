@@ -4,6 +4,7 @@ import primitives.Color;
 
 /**
  * represent the Lights by light intensity as Color
+ *
  * @author Yosef Cohen & Elhanan Tweig
  */
 abstract class Light {
@@ -12,6 +13,7 @@ abstract class Light {
 
     /**
      * constructor for light
+     *
      * @param intensity the intensity color
      */
     protected Light(Color intensity) {
@@ -20,6 +22,7 @@ abstract class Light {
 
     /**
      * getter for intensity
+     *
      * @return the intensity color
      */
     public Color getIntensity() {

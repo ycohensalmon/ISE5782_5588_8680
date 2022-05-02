@@ -7,6 +7,7 @@ import geometries.*;
 import primitives.*;
 import renderer.*;
 import scene.Scene;
+
 import static java.awt.Color.*;
 
 /**
@@ -46,6 +47,7 @@ public class RenderTests {
     }
 
     // For stage 6 - please disregard in stage 5
+
     /**
      * Produce a scene with basic 3D model - including individual lights of the
      * bodies and render it into a png image with a grid

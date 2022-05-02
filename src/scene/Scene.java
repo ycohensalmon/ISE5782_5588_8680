@@ -43,6 +43,7 @@ public class Scene {
 
     /**
      * set the scene`s light
+     *
      * @param lights new light
      * @return the updated scene itself
      */
@@ -54,6 +55,7 @@ public class Scene {
     /**
      * Constructs a new scene with a given name.
      * Sets all colors as black and creates new empty lists for geometries and lights.
+     *
      * @param name The name of the scene.
      */
     public Scene(String name) {
@@ -62,6 +64,7 @@ public class Scene {
 
     /**
      * Set the scene's background color
+     *
      * @param background New color for the background
      * @return the updated scene itself
      */
@@ -72,6 +75,7 @@ public class Scene {
 
     /**
      * Set the scene's ambientLight
+     *
      * @param ambientLight New ambientLight
      * @return the updated scene itself
      */
@@ -82,6 +86,7 @@ public class Scene {
 
     /**
      * Set the scene's geometry list.
+     *
      * @param geometries New list of geometries
      * @return the updated scene itself
      */

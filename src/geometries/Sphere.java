@@ -70,12 +70,12 @@ public class Sphere extends Geometry {
         try {
             u = center.subtract(p0);
         } catch (IllegalArgumentException ignore) {
-            return List.of(new GeoPoint(this,ray.getPoint(radius)));
+            return List.of(new GeoPoint(this, ray.getPoint(radius)));
         }
 
         double tm = alignZero(v.dotProduct(u));
         double dSqr = alignZero(u.lengthSquared() - tm * tm);
-        double thSqr = radius*radius - dSqr;
+        double thSqr = radius * radius - dSqr;
         // no intersections : the ray direction is above the sphere
         if (alignZero(thSqr) <= 0) return null;
 
@@ -85,7 +85,7 @@ public class Sphere extends Geometry {
         if (t2 <= 0) return null;
 
         double t1 = alignZero(tm - th);
-        return t1 <= 0 ? List.of(new GeoPoint(this,ray.getPoint(t2)))
-                : List.of(new GeoPoint(this,ray.getPoint(t1)), new GeoPoint(this,ray.getPoint(t2)));
+        return t1 <= 0 ? List.of(new GeoPoint(this, ray.getPoint(t2)))
+                : List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)));
     }
 }

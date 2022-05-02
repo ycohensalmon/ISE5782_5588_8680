@@ -19,7 +19,7 @@ class RayTest {
     @Test
     void findClosestPoint() {
 
-        Ray ray = new Ray(ZERO_POINT, new Vector(1,0,0));
+        Ray ray = new Ray(ZERO_POINT, new Vector(1, 0, 0));
         Point a = new Point(8, 0, 0),
                 b = new Point(2, 0, 0),
                 c = new Point(5, 0, 0);

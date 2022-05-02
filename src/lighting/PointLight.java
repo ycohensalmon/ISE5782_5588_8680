@@ -6,17 +6,19 @@ import primitives.Vector;
 
 /**
  * class for a point light with position and without direction
+ *
  * @author Elhanan Tweig & Yossef Cohen-Salmon
  */
-public class PointLight extends Light implements LightSource{
+public class PointLight extends Light implements LightSource {
 
     private Point position;
     private double kC, kL, kQ;
 
     /**
      * constructor of point light
+     *
      * @param intensity=the color of the light
-     * @param position=the position of the light
+     * @param position=the  position of the light
      */
     public PointLight(Color intensity, Point position) {
         super(intensity);
@@ -28,6 +30,7 @@ public class PointLight extends Light implements LightSource{
 
     /**
      * setter for kc
+     *
      * @param kC the constant attenuation
      * @return the point light
      */
@@ -38,6 +41,7 @@ public class PointLight extends Light implements LightSource{
 
     /**
      * setter for kl
+     *
      * @param kL the linear attenuation
      * @return the point light
      */
@@ -48,6 +52,7 @@ public class PointLight extends Light implements LightSource{
 
     /**
      * setter for kq
+     *
      * @param kQ the quadratic attenuation
      * @return the point light
      */
@@ -69,7 +74,7 @@ public class PointLight extends Light implements LightSource{
 
     @Override
     public Vector getL(Point p) {
-        if(!p.equals(position))
+        if (!p.equals(position))
             return p.subtract(position).normalize();
         return null;
     }

@@ -27,6 +27,7 @@ public abstract class Intersectable {
     /**
      * find all intersection points {@link Point}
      * that intersect with a specific ray{@link Ray}
+     *
      * @param ray ray pointing towards the graphic object
      * @return immutable list of intersection geo points {@link GeoPoint}
      */
@@ -37,6 +38,7 @@ public abstract class Intersectable {
     /**
      * help the func` findGeoIntersections that find all intersection points {@link Point}
      * that intersect with a specific ray{@link Ray}
+     *
      * @param ray ray pointing towards the graphic object
      * @return immutable list of intersection geo points {@link GeoPoint}
      */
@@ -51,8 +53,9 @@ public abstract class Intersectable {
 
         /**
          * constructor for GeoPoint
+         *
          * @param geometry the geometry object
-         * @param point the point
+         * @param point    the point
          */
         public GeoPoint(Geometry geometry, Point point) {
             this.geometry = geometry;

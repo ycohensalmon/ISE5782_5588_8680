@@ -1,4 +1,5 @@
 package renderer;
+
 import primitives.*;
 import primitives.Color;
 import primitives.Point;
@@ -156,6 +157,7 @@ public class Camera {
 
     /**
      * the method check if all the fields are set
+     *
      * @return The current instance (Builder pattern).
      */
     public Camera renderImage() {
@@ -166,8 +168,7 @@ public class Camera {
                 throw new MissingResourceException(RESOURCE, CAMERA_CLASS, CAMERA);
             if (rayTracer == null)
                 throw new MissingResourceException(RESOURCE, CAMERA_CLASS, RAY_TRACER);
-        }
-        catch (MissingResourceException e) {
+        } catch (MissingResourceException e) {
             throw new UnsupportedOperationException(e.getMessage());
         }
 
@@ -188,7 +189,7 @@ public class Camera {
      * step and color.
      *
      * @param interval grid's interval
-     * @param color grid's color
+     * @param color    grid's color
      */
     public void printGrid(int interval, Color color) {
         if (imageWriter == null)

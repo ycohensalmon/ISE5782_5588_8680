@@ -33,7 +33,7 @@ public class Triangle extends Polygon {
         if (result == null) return null;
 
         for (GeoPoint g : result)
-            g.geometry=this;
+            g.geometry = this;
 
         Point p0 = ray.getP0();
         Vector v = ray.getDir();

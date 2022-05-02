@@ -91,6 +91,6 @@ public class Plane extends Geometry {
         if (isZero(nv)) return null;
 
         double t = alignZero(normal.dotProduct(u) / nv);
-        return t <= 0 ? null : List.of(new GeoPoint(this,ray.getPoint(t)));
+        return t <= 0 ? null : List.of(new GeoPoint(this, ray.getPoint(t)));
     }
 }
