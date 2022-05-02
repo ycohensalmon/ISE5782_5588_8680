@@ -70,6 +70,8 @@ public class Camera {
     }
 
     /**
+     * get the width of the view plane
+     *
      * @return The width from the view plane.
      */
     public double getWidth() {
@@ -77,6 +79,8 @@ public class Camera {
     }
 
     /**
+     * get the height of the view plane
+     *
      * @return The height from the view plane.
      */
     public double getHeight() {
@@ -84,6 +88,8 @@ public class Camera {
     }
 
     /**
+     * get the distance from the p0 to the view plane
+     *
      * @return The distance from the p0 to the view plane.
      */
     public double getDistance() {
@@ -91,6 +97,8 @@ public class Camera {
     }
 
     /**
+     * init the image writer
+     *
      * @param imageWriter The imageWriter to set.
      * @return The current instance (Builder pattern).
      */
@@ -100,6 +108,8 @@ public class Camera {
     }
 
     /**
+     * init the ray tracer
+     *
      * @param rayTracer The rayTracer to set.
      * @return The current instance (Builder pattern).
      */
@@ -109,6 +119,8 @@ public class Camera {
     }
 
     /**
+     * init the view plane by the width and height
+     *
      * @param width  The number to set as the view plane's width.
      * @param height The number to set as the view plane's height.
      * @return The current instance (Builder pattern).
@@ -120,6 +132,8 @@ public class Camera {
     }
 
     /**
+     * init the distance of the view plane
+     *
      * @param distance The number to set as the distance between the p0 and the view plane.
      * @return The current instance (Builder pattern).
      */
