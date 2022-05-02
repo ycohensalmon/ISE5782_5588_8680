@@ -49,9 +49,4 @@ public class Cylinder extends Tube {
     public Vector getNormal(Point p) {
         return null;
     }
-
-    @Override
-    public List<Point> findIntersections(Ray ray) {
-        return null;
-    }
 }

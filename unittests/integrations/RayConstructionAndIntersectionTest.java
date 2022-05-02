@@ -14,14 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class RayConstructionAndIntersectionTest {
 
-    static final Point ZERO_POINT = new Point(0, 0, 0);
-
     /**
      * Tests the integration of ray construction and ray intersection.
      */
     @Test
     public void rayConstructionAndIntersectionTest() {
-        Camera camera = new Camera(ZERO_POINT, new Vector(0, 0, -1), new Vector(0, 1, 0))
+        Camera camera = new Camera(Point.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0))
                 .setViewPlaneDistance(1).setViewPlaneSize(3, 3);
 
         // TC01: Sphere, 2 intersection points
@@ -63,7 +61,7 @@ public class RayConstructionAndIntersectionTest {
         assertEquals(6, intersectionPointCountThroughCamera(camera, pl), "TC07: Tilted plane, 6 intersection points test not working");
 
         // TC08: Triangle, 1 intersection point
-        camera = new Camera(ZERO_POINT, new Vector(0, 0, -1), new Vector(0, 1, 0))
+        camera = new Camera(Point.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0))
                 .setViewPlaneDistance(1).setViewPlaneSize(3,3);
         Triangle tr = new Triangle(new Point(0, 1, -2),
                 new Point(1, -1, -2), new Point(-1, -1, -2));

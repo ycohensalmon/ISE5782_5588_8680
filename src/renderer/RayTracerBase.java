@@ -13,7 +13,7 @@ public abstract class RayTracerBase {
     /**
      * The scene to trace.
      */
-    protected Scene scene;
+    protected final Scene scene;
 
     /**
      * Constructs a new instance of ray tracer (the inherit class) with a given scene.

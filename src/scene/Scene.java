@@ -2,7 +2,11 @@ package scene;
 
 import geometries.Geometries;
 import lighting.AmbientLight;
+import lighting.LightSource;
 import primitives.*;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import static java.awt.Color.BLACK;
 
@@ -20,18 +24,32 @@ public class Scene {
     /**
      * The background color of the scene.
      */
-    public Color background;
+    public Color background = Color.BLACK;
 
     /**
      * The ambient color of the scene.
      */
-    public AmbientLight ambientLight;
+    public AmbientLight ambientLight = new AmbientLight();
 
     /**
      * A list of all geometries in the scene.
      */
-    public Geometries geometries;
+    public Geometries geometries = new Geometries();
 
+    /**
+     * A list of all kind of light
+     */
+    public List<LightSource> lights = new LinkedList<>();
+
+    /**
+     * set the scene`s light
+     * @param lights new light
+     * @return the updated scene itself
+     */
+    public Scene setLights(List<LightSource> lights) {
+        this.lights = lights;
+        return this;
+    }
 
     /**
      * Constructs a new scene with a given name.
@@ -40,15 +58,12 @@ public class Scene {
      */
     public Scene(String name) {
         this.name = name;
-        geometries = new Geometries();
-        background = new Color(BLACK);
-        ambientLight = new AmbientLight(new Color(BLACK), Double3.ZERO);
     }
 
     /**
      * Set the scene's background color
      * @param background New color for the background
-     * @return this
+     * @return the updated scene itself
      */
     public Scene setBackground(Color background) {
         this.background = background;
@@ -58,7 +73,7 @@ public class Scene {
     /**
      * Set the scene's ambientLight
      * @param ambientLight New ambientLight
-     * @return this
+     * @return the updated scene itself
      */
     public Scene setAmbientLight(AmbientLight ambientLight) {
         this.ambientLight = ambientLight;
@@ -68,11 +83,10 @@ public class Scene {
     /**
      * Set the scene's geometry list.
      * @param geometries New list of geometries
-     * @return this (builder pattern)
+     * @return the updated scene itself
      */
     public Scene setGeometries(Geometries geometries) {
         this.geometries = geometries;
         return this;
-
     }
 }

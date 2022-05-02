@@ -3,9 +3,6 @@ package renderer;
 import org.junit.jupiter.api.Test;
 import primitives.Color;
 
-
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * A class to test the image writer class.
  *
@@ -14,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ImageWriterTest {
 
     /**
-     * A test to test the write to image function.
+     * A test to test write to image function.
      */
     @Test
     void writeToImageTest() {
@@ -24,7 +21,6 @@ class ImageWriterTest {
                 if ((i % 50 == 0) || (j % 50 == 0))
                     imageWriter.writePixel(i, j, new Color(0, 0, 0));
                 else imageWriter.writePixel(i, j, new Color(204, 255, 153));
-
             }
 
         imageWriter.writeToImage();

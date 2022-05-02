@@ -13,7 +13,7 @@ import static primitives.Util.isZero;
  *
  * @author Elhanan Tweig & Yossef Cohen-Salmon
  */
-public class Tube implements Geometry {
+public class Tube extends Geometry {
     final protected Ray axisRay;
     final protected double radius;
 
@@ -61,7 +61,7 @@ public class Tube implements Geometry {
     }
 
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         return null;
     }
 }
