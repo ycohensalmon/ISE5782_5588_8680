@@ -191,8 +191,8 @@ public class LightsTests {
     public void triangleAll() {
         Vector trDL1 = new Vector(-2, -5, -2);
         Vector trDL2 = new Vector(-2, 2, 2);
-        Point trPL1 = new Point(-5, 10, 30);
-        Point trPL2 = new Point(60, 55, -125);
+        Point trPL1 = new Point(50, 50, -80);
+        Point trPL2 = new Point(-30, -60, -100);
         scene2.geometries.add(triangle1, triangle2);
         scene2.lights.add(new DirectionalLight(trCL, trDL1));
         scene2.lights.add(new PointLight(trCL, trPL2).setKl(0.001).setKq(0.0002));

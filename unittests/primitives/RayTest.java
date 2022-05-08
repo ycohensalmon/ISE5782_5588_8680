@@ -47,4 +47,21 @@ class RayTest {
         assertEquals(b, ray.findClosestPoint(lst), "TC13: Last point is the closest test failed");
 
     }
+
+    @Test
+    void testGetPoint() {
+        Ray ray = new Ray(new Point(1, 1, 1), new Vector(1, 0, 0));
+
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: t > 0
+        assertEquals(new Point(6, 1, 1), ray.getPoint(5), "TC01: t > 0 test failed");
+
+        // TC02: t < 0
+        assertEquals(new Point(-4, 1, 1), ray.getPoint(-5), "TC02: t < 0 test failed");
+
+
+        // =============== Boundary Values Tests ==================
+        // TC11: t = 0
+        assertEquals(new Point(1, 1, 1), ray.getPoint(0), "TC11: t = 0 test failed");
+    }
 }
