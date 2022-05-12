@@ -175,16 +175,12 @@ public class Camera {
      * @return The current instance (Builder pattern).
      */
     public Camera renderImage() {
-        try {
-            if (imageWriter == null)
-                throw new MissingResourceException(RESOURCE, CAMERA_CLASS, IMAGE_WRITER);
-            if (p0 == null || vTo == null || vUp == null || vRight == null || width == 0 || height == 0 || distance == 0)
-                throw new MissingResourceException(RESOURCE, CAMERA_CLASS, CAMERA);
-            if (rayTracer == null)
-                throw new MissingResourceException(RESOURCE, CAMERA_CLASS, RAY_TRACER);
-        } catch (MissingResourceException e) {
-            throw new UnsupportedOperationException(e.getMessage());
-        }
+        if (imageWriter == null)
+            throw new MissingResourceException(RESOURCE, CAMERA_CLASS, IMAGE_WRITER);
+        if (p0 == null || vTo == null || vUp == null || vRight == null || width == 0 || height == 0 || distance == 0)
+            throw new MissingResourceException(RESOURCE, CAMERA_CLASS, CAMERA);
+        if (rayTracer == null)
+            throw new MissingResourceException(RESOURCE, CAMERA_CLASS, RAY_TRACER);
 
         final int nX = imageWriter.getNx();
         final int nY = imageWriter.getNy();
@@ -194,6 +190,16 @@ public class Camera {
         return this;
     }
 
+
+    /**
+     * the method cast a ray through a pixel
+     *
+     * @param nX number of pixels on X axis in the view plane
+     * @param nY number of pixels on Y axis in the view plane
+     * @param j X coordinate of the pixel
+     * @param i Y coordinate of the pixel
+     * @return the color of the pixel
+     */
     private Color castRay(int nX, int nY, int j, int i) {
         return this.rayTracer.traceRay(this.constructRayThroughPixel(nX, nY, j, i));
     }

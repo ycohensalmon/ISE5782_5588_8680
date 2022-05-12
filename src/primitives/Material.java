@@ -4,8 +4,8 @@ package primitives;
  * class foe the material of object represented by its shininess, diffuse and specular
  */
 public class Material {
-    public Double3 kD = new Double3(0.0);
-    public Double3 kS = new Double3(0.0);
+    public Double3 kD = Double3.ZERO;
+    public Double3 kS = Double3.ZERO;
     public int nShininess = 0;
 
     /**

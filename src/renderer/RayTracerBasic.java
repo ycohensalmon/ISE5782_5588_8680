@@ -3,8 +3,8 @@ package renderer;
 import lighting.LightSource;
 import primitives.*;
 import scene.Scene;
-import geometries.Geometries;
-import geometries.Intersectable.GeoPoint;
+
+import static geometries.Intersectable.GeoPoint;
 
 import java.util.List;
 
@@ -32,10 +32,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @return the color at this point
      */
     private Color calcColor(GeoPoint geoPoint, Ray ray) {
-        Color ambientLight = scene.ambientLight.getIntensity();
-        Color emissionLight = geoPoint.geometry.getEmission();
-        Color localEffects = calcLocalEffects(geoPoint, ray);
-        return ambientLight.add(emissionLight).add(localEffects);
+        return scene.ambientLight.getIntensity().add(calcLocalEffects(geoPoint, ray));
     }
 
     /**
@@ -51,16 +48,16 @@ public class RayTracerBasic extends RayTracerBase {
         double nv = alignZero(n.dotProduct(v));
         if (nv == 0) return Color.BLACK;
         int nShininess = geoPoint.geometry.getMaterial().nShininess;
-        Double3 kd = geoPoint.geometry.getMaterial().kD;
-        Double3 ks = geoPoint.geometry.getMaterial().kS;
+        Material material = geoPoint.geometry.getMaterial();
 
-        Color color = Color.BLACK;
+        Color color = geoPoint.geometry.getEmission();
         for (LightSource lightSource : scene.lights) {
             Vector l = lightSource.getL(geoPoint.point);
             double nl = alignZero(n.dotProduct(l));
             if (nl * nv > 0) {
                 Color lightIntensity = lightSource.getIntensity(geoPoint.point);
-                color = color.add(calcDiffusive(kd, nl, lightIntensity), calcSpecular(ks, l, n, nl, v, nShininess, lightIntensity));
+                color = color.add(calcDiffusive(material.kD, nl, lightIntensity),
+                        calcSpecular(material.kS, l, n, nl, v, nShininess, lightIntensity));
             }
         }
         return color;
@@ -81,7 +78,8 @@ public class RayTracerBasic extends RayTracerBase {
     private Color calcSpecular(Double3 ks, Vector l, Vector n, double nl, Vector v, int nShininess, Color lightIntensity) {
         Vector r = l.add(n.scale(-2 * nl));
         double vr = alignZero(v.dotProduct(r));
-        return lightIntensity.scale(ks.scale(Math.pow(Math.max(0, -1 * vr), nShininess)));
+        if (vr >= 0) return Color.BLACK;
+        return lightIntensity.scale(ks.scale(Math.pow(-vr, nShininess)));
     }
 
     /**
@@ -99,10 +97,7 @@ public class RayTracerBasic extends RayTracerBase {
     @Override
     public Color traceRay(Ray ray) {
         List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray);
-        if (intersections == null)
-            //ray did not intersect any geometrical object
-            return scene.background;
-        GeoPoint closestPoint = ray.findClosestGeoPoint(intersections);
-        return calcColor(closestPoint, ray);
+        return intersections == null ? scene.background :
+                calcColor(ray.findClosestGeoPoint(intersections), ray);
     }
 }

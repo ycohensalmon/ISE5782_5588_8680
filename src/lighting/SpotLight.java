@@ -4,6 +4,8 @@ import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
 
+import static primitives.Util.alignZero;
+
 /**
  * class for a spotLight - light with direction and position
  *
@@ -27,11 +29,8 @@ public class SpotLight extends PointLight {
 
     @Override
     public Color getIntensity(Point p) {
-        Color pointIntensity = super.getIntensity(p);
-        Vector l = getL(p);
-        double attenuation = l.dotProduct(direction);
-
-        return pointIntensity.scale(Math.max(0, attenuation));
+        double attenuation = getL(p).dotProduct(direction);
+        return alignZero(attenuation) <= 0 ? Color.BLACK : super.getIntensity(p).scale(attenuation);
     }
 
     //bonus
