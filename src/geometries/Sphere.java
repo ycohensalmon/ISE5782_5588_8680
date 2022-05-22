@@ -4,6 +4,7 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.alignZero;
@@ -62,7 +63,7 @@ public class Sphere extends Geometry {
     }
 
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
         Point p0 = ray.getP0();
         Vector v = ray.getDir();
 
@@ -70,7 +71,7 @@ public class Sphere extends Geometry {
         try {
             u = center.subtract(p0);
         } catch (IllegalArgumentException ignore) {
-            return List.of(new GeoPoint(this, ray.getPoint(radius)));
+            return alignZero(radius - maxDistance) > 0 ? null : List.of(new GeoPoint(this, ray.getPoint(radius)));
         }
 
         double tm = alignZero(v.dotProduct(u));
@@ -85,7 +86,17 @@ public class Sphere extends Geometry {
         if (t2 <= 0) return null;
 
         double t1 = alignZero(tm - th);
-        return t1 <= 0 ? List.of(new GeoPoint(this, ray.getPoint(t2)))
-                : List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)));
+        if (t1 <= 0) {
+            if (alignZero(t2 - maxDistance) <= 0)
+                return List.of(new GeoPoint(this, ray.getPoint(t2)));
+            return null;
+        } else {
+            List<GeoPoint> result = new LinkedList<>();
+            if (alignZero(t1 - maxDistance) <= 0)
+                result.add(new GeoPoint(this, ray.getPoint(t1)));
+            if (alignZero(t2 - maxDistance) <= 0)
+                result.add(new GeoPoint(this, ray.getPoint(t2)));
+            return result.isEmpty() ? null : result;
+        }
     }
 }
