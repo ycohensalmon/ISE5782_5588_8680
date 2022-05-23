@@ -1,16 +1,17 @@
 package primitives;
 
 /**
- * class foe the material of object represented by its shininess, diffuse and specular
+ * class for the material of object represented by its shininess, diffuse and specular
  */
 public class Material {
     public Double3 kD = Double3.ZERO;
     public Double3 kS = Double3.ZERO;
     public int nShininess = 0;
     //promotes transparency
-    public Double3 kT= new Double3(0.0);
-    //coefficient of reflection
-    public Double3 kR= new Double3(0.0);
+    public Double3 kT= Double3.ZERO;
+    /** reflection attenuation factor
+     */
+    public Double3 kR= Double3.ZERO;
 
     /** setter for kt
      * @param kT the promotes transparency

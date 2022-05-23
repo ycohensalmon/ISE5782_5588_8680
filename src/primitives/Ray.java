@@ -34,17 +34,15 @@ public class Ray {
      * set the ray with the sliding of
      * the initial point in the delta on the normal
      * @param p the initial point
-     * @param dir the direction of the ray
+     * @param v the direction of the ray - must already be normalized
      * @param n the normal
      */
-    public Ray(Point p, Vector dir, Vector n) {
+    public Ray(Point p, Vector v, Vector n) {
         //point + normal.scale(±DELTA)
-        this.dir = dir.normalize();
-
-        double nv = n.dotProduct(dir);
-
+        double nv = n.dotProduct(v);
         Vector normalEpsilon = n.scale((nv > 0 ? DELTA : -DELTA));
         p0 = p.add(normalEpsilon);
+        dir = v;
     }
 
     /**
@@ -94,7 +92,7 @@ public class Ray {
         if (geoPoints == null || geoPoints.isEmpty())
             return null;
         GeoPoint result = null;
-        Double closest = Double.MAX_VALUE;
+        double closest = Double.POSITIVE_INFINITY;
         for (GeoPoint p : geoPoints) {
             double temp = p.point.distance(p0);
             if (temp < closest) {
@@ -109,8 +107,6 @@ public class Ray {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
-            return false;
         if (!(obj instanceof Ray other))
             return false;
         return this.dir.equals(other.dir) && this.p0.equals(other.p0);
