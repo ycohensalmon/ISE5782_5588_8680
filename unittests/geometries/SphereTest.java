@@ -137,4 +137,9 @@ class SphereTest {
         assertNull(sphere.findIntersections(ray), "TC22: Ray outside orthogonal to sphere center line.");
 
     }
+
+    @Test
+    void findGeoIntersectionsHelperTest() {
+
+    }
 }
