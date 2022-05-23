@@ -32,9 +32,6 @@ public class Triangle extends Polygon {
         //Check if the ray intersect the plane.
         if (result == null) return null;
 
-        for (GeoPoint g : result)
-            g.geometry = this;
-
         Point p0 = ray.getP0();
         Vector v = ray.getDir();
         Vector v1 = vertices.get(0).subtract(p0);
@@ -52,6 +49,7 @@ public class Triangle extends Polygon {
         double vn3 = alignZero(v.dotProduct(n3));
         if (vn1 * vn3 <= 0) return null;
 
+        result.get(0).geometry = this;
         return result;
     }
 }

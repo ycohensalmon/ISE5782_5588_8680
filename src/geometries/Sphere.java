@@ -83,20 +83,16 @@ public class Sphere extends Geometry {
         double th = alignZero(Math.sqrt(thSqr));
 
         double t2 = alignZero(tm + th);
-        if (t2 <= 0) return null;
+        if (t2 <= 0) return null; // both points before p0
 
         double t1 = alignZero(tm - th);
-        if (t1 <= 0) {
-            if (alignZero(t2 - maxDistance) <= 0)
-                return List.of(new GeoPoint(this, ray.getPoint(t2)));
-            return null;
-        } else {
-            List<GeoPoint> result = new LinkedList<>();
-            if (alignZero(t1 - maxDistance) <= 0)
-                result.add(new GeoPoint(this, ray.getPoint(t1)));
-            if (alignZero(t2 - maxDistance) <= 0)
-                result.add(new GeoPoint(this, ray.getPoint(t2)));
-            return result.isEmpty() ? null : result;
+        if (alignZero(t1 - maxDistance) > 0) return null; // both points after maxDistance
+
+        if (alignZero(t2 - maxDistance) > 0) // 2nd point after maxDistance
+            return t1 <= 0 ? null : List.of(new GeoPoint(this, ray.getPoint(t1)));
+        else { // 2nd point between p0 and maxDistance - it's included in the list!
+            GeoPoint gp2 = new GeoPoint(this, ray.getPoint(t2));
+            return t1 <= 0 ? List.of(gp2) : List.of(new GeoPoint(this, ray.getPoint(t1)), gp2);
         }
     }
 }
