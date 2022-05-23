@@ -21,11 +21,6 @@ public class Double3 {
     public static final Double3 ZERO = new Double3(0, 0, 0);
 
     /**
-     * Ones triad (1,1,1)
-     */
-    public static final Double3 ONE = new Double3(1, 1, 1);
-
-    /**
      * Constructor to initialize Double3 based object with its three number values
      *
      * @param d1 first number value
