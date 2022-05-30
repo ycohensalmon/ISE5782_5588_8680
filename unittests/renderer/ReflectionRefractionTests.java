@@ -114,11 +114,11 @@ public class ReflectionRefractionTests {
 				new Vector(0, 0, -1), new Vector(0, 1, 0)) //
 				.setViewPlaneSize(200, 200).setViewPlaneDistance(1000);
 
-		Scene scen = new Scene("Test scene")
+		Scene scene = new Scene("Test scene")
 				.setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.15)))
 				.setBackground(new Color(94,97,99));
 
-		scen.geometries.add( //
+		scene.geometries.add( //
 				new Triangle(new Point(450, -350, 0),
 						new Point(-500, -400, 0), new Point(0, 500, -80)) //
 						.setEmission(new Color(75,75,75)) //
@@ -130,13 +130,13 @@ public class ReflectionRefractionTests {
 				new Sphere(new Point(200, 100, 800), 50d).setEmission(new Color(GREEN)) //
 						.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(20).setKt(0.3)));
 
-		scen.lights.add(new SpotLight(new Color(700, 400, 400),
+		scene.lights.add(new SpotLight(new Color(700, 400, 400),
 				new Point(0, 0, 900), new Vector(0.5, 2.5, -7.5)) //
 				.setKl(4E-5).setKq(2E-7));
 
 		ImageWriter imageWriter = new ImageWriter("allFeature", 600, 600);
 		camera.setImageWriter(imageWriter) //
-				.setRayTracer(new RayTracerBasic(scen)) //
+				.setRayTracer(new RayTracerBasic(scene)) //
 				.renderImage() //
 				.writeToImage();
 	}

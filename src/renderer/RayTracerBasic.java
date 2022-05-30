@@ -74,12 +74,12 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     /**
-     * TODO
-     * @param ray
-     * @param level
+     * calc the color affected by refraction/reflection
+     * @param ray the reflected/refracted ray
+     * @param level the level of the recursion
      * @param k
-     * @param kx
-     * @return
+     * @param kx kr/kt
+     * @return the color affected by refraction/reflection
      */
     private Color calcGlobalEffect(Ray ray, int level, Double3 k, Double3 kx) {
         Double3 kkx = k.product(kx);
