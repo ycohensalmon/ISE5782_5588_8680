@@ -26,18 +26,61 @@ public class Mp1test {
             .setViewPlaneSize(150, 150) //
             .setViewPlaneDistance(140);
 
-    private Geometry sphere1 = new Sphere(new Point(0, -50, -50), 27d) //
+    private Geometry sphere1 = new Sphere(new Point(0,0,0), 10d) //
             .setEmission(new Color(BLUE).reduce(2)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
-    private Geometry sphere2 = new Sphere(new Point(0, -15, -50), 20d) //
+    private Geometry sphere2 = new Sphere(new Point(20,0,0), 10d) //
             .setEmission(new Color(BLUE).reduce(2)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
-    private Geometry sphere3 = new Sphere(new Point(5, -5, -50), 5d) //
+    private Geometry sphere3 = new Sphere(new Point(40,0,0), 10d) //
             .setEmission(new Color(PINK).reduce(2)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
-    private Geometry sphere4 = new Sphere(new Point(-5, -5, -50), 5d) //
+    private Geometry sphere4 = new Sphere(new Point(60,0,0), 10d) //
             .setEmission(new Color(PINK).reduce(2)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+    private Geometry sphere5 = new Sphere(new Point(80,0,0), 10d) //
+            .setEmission(new Color(PINK).reduce(2)) //
+            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+    private Geometry sphere6 = new Sphere(new Point(0,-20,0), 10d) //
+            .setEmission(new Color(PINK).reduce(2)) //
+            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+    private Geometry sphere7 = new Sphere(new Point(0,-40,0), 10d) //
+            .setEmission(new Color(PINK).reduce(2)) //
+            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+    private Geometry sphere8 = new Sphere(new Point(0,-60,0), 10d) //
+            .setEmission(new Color(PINK).reduce(2)) //
+            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+    private Geometry sphere9 = new Sphere(new Point(0,-80,0), 10d) //
+            .setEmission(new Color(PINK).reduce(2)) //
+            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+    private Geometry sphere10 = new Sphere(new Point(0,0,10.15), 5d) //
+            .setEmission(new Color(PINK).reduce(2)) //
+            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+    private Geometry sphere11 = new Sphere(new Point(20,0,10.15), 5d) //
+            .setEmission(new Color(PINK).reduce(2)) //
+            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+    private Geometry sphere12 = new Sphere(new Point(40,0,10.15), 5d) //
+            .setEmission(new Color(PINK).reduce(2)) //
+            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+    private Geometry sphere13 = new Sphere(new Point(60,0,10.15), 5d) //
+            .setEmission(new Color(PINK).reduce(2)) //
+            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+    private Geometry sphere14 = new Sphere(new Point(80,0,10.15), 5d) //
+            .setEmission(new Color(PINK).reduce(2)) //
+            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+    private Geometry sphere15 = new Sphere(new Point(0,-20,10.15), 5d) //
+            .setEmission(new Color(PINK).reduce(2)) //
+            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+    private Geometry sphere16 = new Sphere(new Point(0,-40,10.15), 5d) //
+            .setEmission(new Color(PINK).reduce(2)) //
+            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+    private Geometry sphere17 = new Sphere(new Point(0,-60,10.15), 5d) //
+            .setEmission(new Color(PINK).reduce(2)) //
+            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+    private Geometry sphere18 = new Sphere(new Point(0,-80,10.15), 5d) //
+            .setEmission(new Color(PINK).reduce(2)) //
+            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+
 
 
 
@@ -46,7 +89,8 @@ public class Mp1test {
      */
     @Test
     public void spherePoint() {
-        scene1.geometries.add(sphere1, sphere2, sphere3, sphere4);
+        scene1.geometries.add(sphere1, sphere2, sphere3, sphere4, sphere5, sphere6, sphere7, sphere8,
+                sphere9, sphere10, sphere11, sphere12, sphere13, sphere14, sphere15, sphere16, sphere17, sphere18);
         scene1.lights.add(new PointLight(spCL, spPL).setKl(0.001).setKq(0.0002));
 
         ImageWriter imageWriter = new ImageWriter("mp11", 500, 500);
@@ -79,9 +123,10 @@ public class Mp1test {
         Geometry right = new Polygon(floor4, floor3, up3, up4)
                 .setEmission(new Color(RED).reduce(2)) //
                 .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
-        scene1.geometries.add(floor, left, right);
+        scene1.geometries.add(floor, left, right, sphere1, sphere2, sphere3, sphere4, sphere5, sphere6, sphere7, sphere8,
+                sphere9, sphere10, sphere11, sphere12, sphere13, sphere14, sphere15, sphere16, sphere17, sphere18);
         scene1.lights.add(new DirectionalLight(new Color(200,50,80), trDL1));
-        ;
+        scene1.lights.add(new PointLight(spCL, spPL).setKl(0.001).setKq(0.0002));
 
         ImageWriter imageWriter = new ImageWriter("mp1", 500, 500);
         camera1.setImageWriter(imageWriter) //
