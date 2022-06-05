@@ -20,11 +20,11 @@ public class Mp1test {
     private Point spPL = new Point(-50, -50, 25); // Sphere test Position of Light
 
     private Scene scene1 = new Scene("Test scene") //
-            .setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.15)));
+            .setAmbientLight(new AmbientLight(new Color(RED), new Double3(0.15)));
 
-    private Camera camera1 = new Camera(new Point(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+    private Camera camera1 = new Camera(new Point(-100, 100, 80), new Vector(5,-5,-4), new Vector(4,-4,10)) //
             .setViewPlaneSize(150, 150) //
-            .setViewPlaneDistance(1000);
+            .setViewPlaneDistance(140);
 
     private Geometry sphere1 = new Sphere(new Point(0, -50, -50), 27d) //
             .setEmission(new Color(BLUE).reduce(2)) //
@@ -60,14 +60,26 @@ public class Mp1test {
     @Test
     public void mp1() {
         Vector trDL1 = new Vector(-13,-7,-10);
-        Point p1 = new Point(6, 6, 1);
-        Point p2 = new Point(5, -6, 1);
-        Point p3 = new Point(-5, -6, 1);
-        Point p4 = new Point(-5, -6, 1);
-        Geometry p = new Triangle(p1, p2, p3)
+
+        Point floor1 = new Point(-50,50,0);
+        Point floor2 = new Point(-50,-50 ,0);
+        Point floor3 = new Point(50,-50,0);
+        Point floor4 = new Point(50,50,0);
+
+        Point up1 = new Point(-50,50,50);
+        Point up2 = new Point(-50,-50 ,50);
+        Point up3 = new Point(50,-50,50);
+        Point up4 = new Point(50,50,50);
+        Geometry floor = new Polygon(floor1 ,floor2 ,floor3 ,floor4)
                 .setEmission(new Color(BLUE).reduce(2)) //
                 .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
-        scene1.geometries.add(p);
+        Geometry left = new Polygon(floor3, floor2, up2, up3)
+                .setEmission(new Color(WHITE).reduce(2)) //
+                .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+        Geometry right = new Polygon(floor4, floor3, up3, up4)
+                .setEmission(new Color(RED).reduce(2)) //
+                .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+        scene1.geometries.add(floor, left, right);
         scene1.lights.add(new DirectionalLight(new Color(200,50,80), trDL1));
         ;
 
