@@ -61,10 +61,10 @@ public class Mp1test {
     public void mp1() {
         Vector trDL1 = new Vector(-13,-7,-10);
 
-        Point floor1 = new Point(-50,50,0);
-        Point floor2 = new Point(-50,-50 ,0);
-        Point floor3 = new Point(50,-50,0);
-        Point floor4 = new Point(50,50,0);
+        Point floor1 = new Point(-50,50,-10);
+        Point floor2 = new Point(-50,-80 ,-10);
+        Point floor3 = new Point(80,-80,-10);
+        Point floor4 = new Point(80,50,-10);
 
         Point up1 = new Point(-50,50,50);
         Point up2 = new Point(-50,-50 ,50);
@@ -79,10 +79,16 @@ public class Mp1test {
         Geometry right = new Polygon(floor4, floor3, up3, up4)
                 .setEmission(new Color(RED).reduce(2)) //
                 .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
-        scene1.geometries.add(floor, left, right);
-        scene1.lights.add(new DirectionalLight(new Color(200,50,80), trDL1));
-        ;
-
+        Geometry line = new Polygon(new Point(-10,-10,60), new Point(-10,-12,60), new Point(-10,-12,50), new Point(-10,-10,50))
+                .setEmission(new Color(BLACK).reduce(2)) //
+                .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+        Geometry up = new Sphere(new Point(-10,-11,50),5)
+                .setEmission(new Color(YELLOW).reduce(2)) //
+                .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+        scene1.geometries.add(floor, left, right,up, line);
+        scene1.lights.add(new DirectionalLight(new Color(200,50,80),  trDL1));
+        //scene1.lights.add(new PointLight(new Color(200,50,80), new Point(-10,-11,50)));
+        //scene1.lights.add(new SpotLight(new Color(200,50,80), new Point(-10,-11,50), new Vector(-20,40,-50)));
         ImageWriter imageWriter = new ImageWriter("mp1", 500, 500);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene1)) //
