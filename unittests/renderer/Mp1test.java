@@ -27,10 +27,10 @@ public class Mp1test {
             .setViewPlaneDistance(140);
 
     private Geometry sphere1 = new Sphere(new Point(0,0,0), 10d) //
-            .setEmission(new Color(BLUE).reduce(2)) //
+            .setEmission(new Color(PINK).reduce(2)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
     private Geometry sphere2 = new Sphere(new Point(20,0,0), 10d) //
-            .setEmission(new Color(BLUE).reduce(2)) //
+            .setEmission(new Color(PINK).reduce(2)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
     private Geometry sphere3 = new Sphere(new Point(40,0,0), 10d) //
             .setEmission(new Color(PINK).reduce(2)) //
@@ -106,14 +106,14 @@ public class Mp1test {
         Vector trDL1 = new Vector(-13,-7,-10);
 
         Point floor1 = new Point(-50,50,-10);
-        Point floor2 = new Point(-50,-80 ,-10);
-        Point floor3 = new Point(80,-80,-10);
-        Point floor4 = new Point(80,50,-10);
+        Point floor2 = new Point(-50,-110 ,-10);
+        Point floor3 = new Point(110,-110,-10);
+        Point floor4 = new Point(110,50,-10);
 
         Point up1 = new Point(-50,50,50);
-        Point up2 = new Point(-50,-50 ,50);
+        Point up2 = new Point(-70,-50 ,50);
         Point up3 = new Point(50,-50,50);
-        Point up4 = new Point(50,50,50);
+        Point up4 = new Point(50,70,50);
         Geometry floor = new Polygon(floor1 ,floor2 ,floor3 ,floor4)
                 .setEmission(new Color(BLUE).reduce(2)) //
                 .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
@@ -138,7 +138,7 @@ public class Mp1test {
         scene1.lights.add(new DirectionalLight(new Color(200,50,80), trDL1));
         scene1.lights.add(new PointLight(spCL, spPL).setKl(0.001).setKq(0.0002));
 
-        ImageWriter imageWriter = new ImageWriter("mp1", 500, 500);
+        ImageWriter imageWriter = new ImageWriter("mp1", 1000, 1000);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene1)) //
                 .renderImage() //
