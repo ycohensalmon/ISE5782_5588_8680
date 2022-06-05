@@ -103,7 +103,7 @@ public class Polygon extends Geometry {
         //V is _dir of the ray
 
 
-        //If there's intersection with the plane so we have to substitute the ray equation into the plane equation
+        //If there's intersection with the plane, so we have to substitute the ray equation into the plane equation
         // (replacing P) to get: (P0 + tV) . N + d = 0 and find the value of t:
         //
         //t = -(P0 . N + d) / (V . N)
@@ -146,6 +146,7 @@ public class Polygon extends Geometry {
                 return null;
         }
 
-        return intersections.stream().map(pt -> new GeoPoint(this, pt.point)).collect(Collectors.toList());
+        intersections.get(0).geometry= this;
+        return intersections;
     }
 }
