@@ -1,5 +1,6 @@
 package renderer;
 
+import lighting.DirectionalLight;
 import lighting.LightSource;
 import primitives.*;
 import scene.Scene;
@@ -31,6 +32,7 @@ public class RayTracerBasic extends RayTracerBase {
      * A constant variable is equal 1
      */
     private static final Double3 INITIAL_K = Double3.ONE;
+    private static final boolean SOFT_SHADOW = true;
 
     /**
      * Constructs a new instance of ray tracer with a given scene.
@@ -140,20 +142,67 @@ public class RayTracerBasic extends RayTracerBase {
         Double3 kd = geoPoint.geometry.getMaterial().kD;
         Double3 ks = geoPoint.geometry.getMaterial().kS;
 
-        Color color = geoPoint.geometry.getEmission();
-        for (LightSource lightSource : scene.lights) {
-            Vector l = lightSource.getL(geoPoint.point);
-            double nl = alignZero(n.dotProduct(l));
-            if (nl * nv > 0) {
-                Double3 ktr = transparency(geoPoint, lightSource, l, n);
-                if (!ktr.product(k).lowerThan(MIN_CALC_COLOR_K)) {
-                    Color lightIntensity = lightSource.getIntensity(geoPoint.point).scale(ktr);
-                    color = color.add(calcDiffusive(kd, nl, lightIntensity),
-                            calcSpecular(ks, l, n, nl, v, nShininess, lightIntensity));
+        Color color = geoPoint.geometry.getEmission();//Color.BLACK;
+
+        //get color given by every light source
+        if (SOFT_SHADOW) {
+            for (LightSource lightSource : scene.lights) {
+                Color color1 = new Color(0, 0, 0);
+                for (Vector l : lightSource.getListL(geoPoint.point)) {
+                    double nl = alignZero(n.dotProduct(l));
+                    if (nl * nv > 0) { // sign(nl) == sign(nv)
+                        //get transparency of the object
+                        Double3 ktr = transparency(geoPoint,lightSource, l, n);
+                        if (!ktr.product(k).lowerThan(MIN_CALC_COLOR_K)) { //check if the depth of calculation was reached then don't calculate any more
+                            // color is scaled by transparency to get the right color effect
+                            Color lightIntensity = lightSource.getIntensity(geoPoint.point).scale(ktr);
+                            //get effects of the color and add them to the color
+                            color1 = color1.add(calcDiffusive(kd, n.dotProduct(l), lightIntensity),
+                                    calcSpecular(ks, l, n,n.dotProduct(l), v, nShininess, lightIntensity));
+                        }
+                    }
+                }
+                color = color.add(color1.reduce(lightSource.getListL(geoPoint.point).size()));
+            }
+        }
+        else {
+            for (LightSource lightSource : scene.lights) {
+                Vector l = lightSource.getL(geoPoint.point);
+                double nl = alignZero(n.dotProduct(l));
+                if (nl * nv > 0) {
+                    Double3 ktr = transparency(geoPoint, lightSource, l, n);
+                    if (!ktr.product(k).lowerThan(MIN_CALC_COLOR_K)) {
+                        Color lightIntensity = lightSource.getIntensity(geoPoint.point).scale(ktr);
+                        color = color.add(calcDiffusive(kd, nl, lightIntensity),
+                                calcSpecular(ks, l, n, nl, v, nShininess, lightIntensity));
+                    }
                 }
             }
         }
         return color;
+    }
+
+    /**
+     * the function that calculates the percentage of rays that heat by the object,
+     * from all the rays that were created by the points of hte light source.
+     *
+     * @param ls       the light source.
+     * @param geoPoint the intersection point.
+     * @param n        the normal of the intersection point.
+     * @return the percentage of rays that are heat by some object.
+     */
+    private Double3 calcShadow(LightSource ls, GeoPoint geoPoint, Vector n) {
+
+        if (ls instanceof DirectionalLight)
+            return transparency(geoPoint,ls,ls.getL(geoPoint.point),n);
+        var list=ls.getListL(geoPoint.point);
+
+        //if this is a relevant light source, and it has size, we are iterating over the vectors of the light source and averaging the transparency of all of them.
+        Double3 average = Double3.ZERO;
+        for (Vector vector : list) {
+            average = average.add(transparency(geoPoint, ls,vector,n).reduce(list.size()));
+        }
+        return average;
     }
 
     /**

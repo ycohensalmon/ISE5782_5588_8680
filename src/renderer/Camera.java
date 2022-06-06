@@ -7,6 +7,8 @@ import primitives.Point;
 import java.awt.*;
 import java.util.MissingResourceException;
 
+import static java.lang.System.out;
+
 /**
  * Camera class represents the camera through which we see the scene.
  */
@@ -184,9 +186,12 @@ public class Camera {
 
         final int nX = imageWriter.getNx();
         final int nY = imageWriter.getNy();
-        for (int i = 0; i < nY; ++i)
-            for (int j = 0; j < nX; ++j)
+        for (int i = 0; i < nY; ++i) {
+            out.println(i + "/" + nY);
+            for (int j = 0; j < nX; ++j) {
                 this.imageWriter.writePixel(j, i, castRay(nX, nY, j, i));
+            }
+        }
         return this;
     }
 

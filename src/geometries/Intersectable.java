@@ -69,8 +69,11 @@ public abstract class Intersectable {
         }
 
         @Override
-        public boolean equals(Object obj) {
-            return super.equals(obj);
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            GeoPoint geoPoint = (GeoPoint) o;
+            return geometry.equals(geoPoint.geometry) && point.equals(geoPoint.point);
         }
 
         @Override

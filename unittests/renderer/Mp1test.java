@@ -55,7 +55,13 @@ public class Mp1test {
     private Geometry sphere9 = new Sphere(new Point(0,-80,0), 10d) //
             .setEmission(new Color(PINK).reduce(2)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
-    private Geometry sphere10 = new Sphere(new Point(0,0,10.15), 5d) //
+    private Geometry sphere10 = new Sphere(new Point(0,0,11), 5d) //
+            .setEmission(new Color(PINK).reduce(2)) //
+            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+    private Geometry sphere100 = new Sphere(new Point(-6,2.5,11.5), 2d) //
+            .setEmission(new Color(PINK).reduce(2)) //
+            .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
+    private Geometry sphere101 = new Sphere(new Point(-2,2.5,11.5), 2d) //
             .setEmission(new Color(PINK).reduce(2)) //
             .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300));
     private Geometry sphere11 = new Sphere(new Point(20,0,10.15), 5d) //
@@ -152,11 +158,11 @@ public class Mp1test {
         scene1.geometries.add(floor, left, right,light, line);
 
         scene1.geometries.add(floor, left, right, sphere1, sphere2, sphere3, sphere4, sphere5, sphere6, sphere7, sphere8,
-                sphere9, sphere10, sphere11, sphere12, sphere13, sphere14, sphere15, sphere16, sphere17, sphere18/*, sphere19,
+                sphere9, sphere10, sphere100, sphere101, sphere11, sphere12, sphere13, sphere14, sphere15, sphere16, sphere17, sphere18/*, sphere19,
                 sphere20, sphere21, sphere22, sphere23, sphere24, sphere25, sphere26, sphere27, sphere28, sphere29, sphere30*/);
         scene1.lights.add(new DirectionalLight(new Color(200,50,80), trDL1));
-        scene1.lights.add(new PointLight(spCL, spPL).setKl(0.001).setKq(0.0002));
-        scene1.lights.add(new PointLight(spCL, spPL2).setKl(0.001).setKq(0.0002));
+        scene1.lights.add(new PointLight(spCL, spPL).setradius(5).setKl(0.001).setKq(0.0002));
+        scene1.lights.add(new PointLight(spCL, spPL2).setradius(5).setKl(0.001).setKq(0.0002));
 
         ImageWriter imageWriter = new ImageWriter("mp1", 1000, 1000);
         camera1.setImageWriter(imageWriter) //
@@ -174,7 +180,7 @@ public class Mp1test {
                 sphere9, sphere10, sphere11, sphere12, sphere13, sphere14, sphere15, sphere16, sphere17, sphere18);
         scene1.lights.add(new PointLight(spCL, spPL).setKl(0.001).setKq(0.0002));
 
-        ImageWriter imageWriter = new ImageWriter("mp11", 500, 500);
+        ImageWriter imageWriter = new ImageWriter("mp11", 1000, 1000);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene1)) //
                 .renderImage() //

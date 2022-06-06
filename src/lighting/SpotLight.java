@@ -18,12 +18,25 @@ public class SpotLight extends PointLight {
     /**
      * constructor of spotLight with position, direction and intensity
      *
-     * @param intensity=the color of the light
-     * @param position=the  position of the light
-     * @param direction=the direction of the light
+     * @param intensity the color of the light
+     * @param position  the position of the light
+     * @param direction the direction of the light
      */
     public SpotLight(Color intensity, Point position, Vector direction) {
         super(intensity, position);
+        this.direction = direction.normalize();
+    }
+
+    /**
+     * constructor of spotLight with position, direction and intensity and radius
+     *
+     * @param intensity the color of the light
+     * @param position the position of the light
+     * @param direction the direction of the light
+     * @param radius the radius of the light
+     */
+    public SpotLight(Color intensity, Point position, Vector direction, double radius) {
+        super(intensity, position, radius);
         this.direction = direction.normalize();
     }
 
@@ -33,8 +46,8 @@ public class SpotLight extends PointLight {
         return alignZero(attenuation) <= 0 ? Color.BLACK : super.getIntensity(p).scale(attenuation);
     }
 
-    //bonus
-    public SpotLight setNarrowBeam(int i) {
-        return this;
+    @Override
+    public Vector getL(Point p) {
+        return super.getL(p);
     }
 }
