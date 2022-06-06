@@ -15,7 +15,9 @@ import static primitives.Util.isZero;
 public class Ray {
     final private Point p0;
     final private Vector dir;
-    //parameter for size of first moving rays for shading rays
+    /**
+     * parameter for size of first moving rays for shading rays
+     */
     private static final double DELTA = 0.1;
 
     /**

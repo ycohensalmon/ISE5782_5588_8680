@@ -17,8 +17,19 @@ import static primitives.Util.isZero;
 
 public class RayTracerBasic extends RayTracerBase {
 
+    /**
+     * The deep of the recursion of transparencies / reflections
+     */
     private static final int MAX_CALC_COLOR_LEVEL = 10;
+
+    /**
+     * check when the color is week, and we will stop the calculation
+     */
     private static final double MIN_CALC_COLOR_K = 0.001;
+
+    /**
+     * A constant variable is equal 1
+     */
     private static final Double3 INITIAL_K = Double3.ONE;
 
     /**
@@ -77,7 +88,6 @@ public class RayTracerBasic extends RayTracerBase {
      * calc the color affected by refraction/reflection
      * @param ray the reflected/refracted ray
      * @param level the level of the recursion
-     * @param k
      * @param kx kr/kt
      * @return the color affected by refraction/reflection
      */
