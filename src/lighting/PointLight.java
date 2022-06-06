@@ -110,7 +110,6 @@ public class PointLight extends Light implements LightSource {
 
     @Override
     public List<Vector> getListL(Point p) {
-        Random r = new Random();
         List<Vector> vectors = new LinkedList();
         for (double i = -radius; i < radius; i += radius / 15) {
             for (double j = -radius; j < radius; j += radius / 15) {

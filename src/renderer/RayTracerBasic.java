@@ -32,7 +32,7 @@ public class RayTracerBasic extends RayTracerBase {
      * A constant variable is equal 1
      */
     private static final Double3 INITIAL_K = Double3.ONE;
-    private static final boolean SOFT_SHADOW = true;
+    private static final boolean SOFT_SHADOW = false;
 
     /**
      * Constructs a new instance of ray tracer with a given scene.
