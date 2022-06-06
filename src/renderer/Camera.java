@@ -56,6 +56,21 @@ public class Camera {
     private RayTracerBase rayTracer;
 
     /**
+     * turn on - off soft shadow
+     */
+    private boolean isSoftShadow = false;
+
+    /**
+     * setter of softShadow
+     * @param softShadow is soft shadow
+     * @return the camera
+     */
+    public Camera setSoftShadow(boolean softShadow) {
+        isSoftShadow = softShadow;
+        return this;
+    }
+
+    /**
      * Constructs an instance of Camera with point and to and up vectors.
      *
      * @param p0  The point of view of the camera.
@@ -206,7 +221,7 @@ public class Camera {
      * @return the color of the pixel
      */
     private Color castRay(int nX, int nY, int j, int i) {
-        return this.rayTracer.traceRay(this.constructRayThroughPixel(nX, nY, j, i));
+        return this.rayTracer.traceRay(this.constructRayThroughPixel(nX, nY, j, i), isSoftShadow);
     }
 
     /**
