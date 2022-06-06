@@ -25,7 +25,7 @@ public class PointLight extends Light implements LightSource {
      * constructor of point light with position and intensity
      *
      * @param intensity the color of the light
-     * @param position the  position of the light
+     * @param position  the  position of the light
      */
     public PointLight(Color intensity, Point position) {
         super(intensity);
@@ -36,8 +36,8 @@ public class PointLight extends Light implements LightSource {
      * constructor of point light with position and intensity
      *
      * @param intensity the color of the light
-     * @param position the  position of the light
-     * @param radius the radius of the light
+     * @param position  the  position of the light
+     * @param radius    the radius of the light
      */
     public PointLight(Color intensity, Point position, double radius) {
         super(intensity);
@@ -110,7 +110,6 @@ public class PointLight extends Light implements LightSource {
 
     @Override
     public List<Vector> getListL(Point p) {
-        Random r = new Random();
         List<Vector> vectors = new LinkedList();
         for (double i = -radius; i < radius; i += radius / 15) {
             for (double j = -radius; j < radius; j += radius / 15) {
