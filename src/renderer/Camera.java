@@ -67,8 +67,6 @@ public class Camera {
      */
     private int numOfRays = 100;
 
-    int maxDeepInPixel = 4;
-
     private threadPool<Pixel> threadPool = null;
     /**
      * Next pixel of the scene
@@ -76,20 +74,41 @@ public class Camera {
     private Pixel nextPixel = null;
 
     /**
-     * Last percent of the image to render
-     */
-    public static int lastPercent = -1;
-
-    /**
      * setter of softShadow
      * @param softShadow is soft shadow
      * @return the camera
      */
-    public Camera setSoftShadow(boolean softShadow, int numOfRays) {
+    public Camera setSoftShadow(boolean softShadow) {
         isSoftShadow = softShadow;
+        return this;
+    }
+
+    /**
+     * setter of numOfRays
+     * @param numOfRays the number of rays
+     * @return the camera
+     */
+    public Camera setNumOfRays(int numOfRays) {
         this.numOfRays = numOfRays;
         return this;
     }
+
+    /**
+     *  get the soft shadow
+     * @return is soft shadow
+     */
+    public  boolean isSoftShadow() {
+        return isSoftShadow;
+    }
+
+    /**
+     * get the number of rays
+     * @return the number of rays
+     */
+    public int getNumOfRays() {
+        return numOfRays;
+    }
+
 
     /**
      * Constructs an instance of Camera with point and to and up vectors.
@@ -208,7 +227,7 @@ public class Camera {
     private final String RAY_TRACER = "Ray tracer";
 
     /**
-     * the method check if all the fields are set
+     * For each pixel in the image, cast a ray and write the color of the pixel to the image
      *
      * @return The current instance (Builder pattern).
      */
@@ -242,7 +261,6 @@ public class Camera {
         }
         return this;
     }
-
 
     /**
      * the method cast a ray through a pixel
@@ -288,73 +306,6 @@ public class Camera {
             throw new MissingResourceException(RESOURCE, CAMERA, IMAGE_WRITER);
 
         imageWriter.writeToImage();
-    }
-
-    /**
-     *  the method check if all the fields are set
-     *
-     * @param deep the number of rays to cast
-     * @param centerPixel the center pixel of the grid
-     * @param width the width of the grid
-     * @param length the length of the grid
-     * @return the color of the pixel
-     */
-    private Color DeepInPixel(int deep, Point centerPixel, double width, double length) {
-
-        width = width / 2;
-        length = length / 2;
-        java.util.List<Point> points = new LinkedList<>();
-        points.add(new Point(centerPixel.getX() + width, centerPixel.getY() + length, centerPixel.getZ()));
-        points.add(new Point(centerPixel.getX() + width, centerPixel.getY() - length, centerPixel.getZ()));
-        points.add(new Point(centerPixel.getX() - width, centerPixel.getY() + length, centerPixel.getZ()));
-        points.add(new Point(centerPixel.getX() - width, centerPixel.getY() - length, centerPixel.getZ()));
-
-        Vector vIJ = centerPixel.subtract(p0);
-        Color colorCenterPixel = rayTracer.traceRay(new Ray(p0, vIJ), isSoftShadow, numOfRays);
-        Color colorSecond;
-        boolean differentColor = false;
-        for (Point point : points) {
-            vIJ = point.subtract(p0);
-            colorSecond = rayTracer.traceRay(new Ray(p0, vIJ), isSoftShadow, numOfRays);
-
-            if (!colorCenterPixel.equals(colorSecond)) {
-                differentColor = true;
-                break;
-            }
-        }
-
-        Color sumColor = new Color(0, 0, 0);
-        if (differentColor && deep < maxDeepInPixel) {
-            sumColor = sumColor.add(DeepInPixel(deep + 1,
-                    new Point(centerPixel.getX() - width / 2, centerPixel.getY() + length / 2, centerPixel.getZ()),
-                    width, length));
-
-            sumColor = sumColor.add(DeepInPixel(deep + 1,
-                    new Point(centerPixel.getX() + width / 2, centerPixel.getY() + length / 2, centerPixel.getZ()),
-                    width, length));
-
-            sumColor = sumColor.add(DeepInPixel(deep + 1,
-                    new Point(centerPixel.getX() - width / 2, centerPixel.getY() - length / 2, centerPixel.getZ()),
-                    width, length));
-
-            sumColor = sumColor.add(DeepInPixel(deep + 1,
-                    new Point(centerPixel.getX() + width / 2, centerPixel.getY() - length / 2, centerPixel.getZ()),
-                    width, length));
-            sumColor = sumColor.reduce(4);
-
-        } else if (differentColor && deep == maxDeepInPixel) {
-
-            sumColor = colorCenterPixel;
-            for (Point point : points) {
-                vIJ = point.subtract(p0);
-                sumColor = sumColor.add(rayTracer.traceRay(new Ray(p0, vIJ), isSoftShadow, numOfRays));
-            }
-            sumColor = sumColor.reduce(5);
-
-        } else
-            return colorCenterPixel;
-
-        return sumColor;
     }
 
     /**
@@ -429,8 +380,7 @@ public class Camera {
 
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
-        castRay(nX, nY, p.col, p.row);
-
+        this.imageWriter.writePixel(p.col, p.row,castRay(nX, nY, p.col, p.row));
         return true; // continue the rendering
     }
 
