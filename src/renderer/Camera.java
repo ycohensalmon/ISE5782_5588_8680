@@ -1,10 +1,12 @@
 package renderer;
 
+import multiThreading.threadPool;
 import primitives.*;
 import primitives.Color;
 import primitives.Point;
 
 import java.awt.*;
+import java.util.LinkedList;
 import java.util.MissingResourceException;
 
 import static java.lang.System.out;
@@ -63,18 +65,50 @@ public class Camera {
     /**
      * the number of rays
      */
+    private int numOfRays = 100;
 
-    private int numOfRays = 1;
+    private threadPool<Pixel> threadPool = null;
+    /**
+     * Next pixel of the scene
+     */
+    private Pixel nextPixel = null;
+
     /**
      * setter of softShadow
      * @param softShadow is soft shadow
      * @return the camera
      */
-    public Camera setSoftShadow(boolean softShadow, int numOfRays) {
+    public Camera setSoftShadow(boolean softShadow) {
         isSoftShadow = softShadow;
+        return this;
+    }
+
+    /**
+     * setter of numOfRays
+     * @param numOfRays the number of rays
+     * @return the camera
+     */
+    public Camera setNumOfRays(int numOfRays) {
         this.numOfRays = numOfRays;
         return this;
     }
+
+    /**
+     *  get the soft shadow
+     * @return is soft shadow
+     */
+    public  boolean isSoftShadow() {
+        return isSoftShadow;
+    }
+
+    /**
+     * get the number of rays
+     * @return the number of rays
+     */
+    public int getNumOfRays() {
+        return numOfRays;
+    }
+
 
     /**
      * Constructs an instance of Camera with point and to and up vectors.
@@ -193,7 +227,7 @@ public class Camera {
     private final String RAY_TRACER = "Ray tracer";
 
     /**
-     * the method check if all the fields are set
+     * For each pixel in the image, cast a ray and write the color of the pixel to the image
      *
      * @return The current instance (Builder pattern).
      */
@@ -207,6 +241,18 @@ public class Camera {
 
         final int nX = imageWriter.getNx();
         final int nY = imageWriter.getNy();
+
+        //rendering the image with multithreaded
+        if (threadPool != null) {
+            nextPixel = new Pixel(0, 0);
+            threadPool.execute();
+
+            printPercentMultithreaded(); // blocks the main thread until finished and prints the progress
+
+            threadPool.join();
+            return this;
+        }
+
         for (int i = 0; i < nY; ++i) {
             out.println(i + "/" + nY);
             for (int j = 0; j < nX; ++j) {
@@ -215,7 +261,6 @@ public class Camera {
         }
         return this;
     }
-
 
     /**
      * the method cast a ray through a pixel
@@ -262,4 +307,139 @@ public class Camera {
 
         imageWriter.writeToImage();
     }
+
+    /**
+     * Chaining method for setting number of threads.
+     * If set to 1, the render won't use the thread pool.
+     * If set to greater than 1, the render will use the thread pool with the given threads.
+     * If set to 0, the thread pool will pick the number of threads.
+     *
+     * @param threads number of threads to use
+     * @return the current render
+     * @throws IllegalArgumentException when threads is less than 0
+     */
+    public Camera setMultithreading(int threads) {
+        if (threads < 0) {
+            throw new IllegalArgumentException("threads can be equals or greater to 0");
+        }
+
+        // run as single threaded without the thread pool
+        if (threads == 1) {
+            threadPool = null;
+            return this;
+        }
+
+        threadPool = new threadPool<Pixel>() // the thread pool choose the number of threads (in0 case threads is 0)
+                .setParamGetter(this::getNextPixel)
+                .setTarget(this::renderImageMultithreaded);
+        if (threads > 0) {
+            threadPool.setNumThreads(threads);
+        }
+
+        return this;
+    }
+
+    /**
+     * Returns the next pixel to draw on multithreaded rendering.
+     * If finished to draw all pixels, returns {@code null}.
+     */
+    private synchronized Pixel getNextPixel() {
+
+        // notifies the main thread in order to print the percent
+        notifyAll();
+
+
+        Pixel result = new Pixel();
+        int nX = imageWriter.getNx();
+        int nY = imageWriter.getNy();
+
+        // updates the row of the next pixel to draw
+        // if got to the end, returns null
+        if (nextPixel.col >= nX) {
+            if (++nextPixel.row >= nY) {
+                return null;
+            }
+            nextPixel.col = 0;
+        }
+
+        result.col = nextPixel.col++;
+        result.row = nextPixel.row;
+        return result;
+    }
+
+    /**
+     * Renders a given pixel on multithreaded rendering.
+     * If the given pixel is null, returns false which means kill the thread.
+     *
+     * @param p the pixel to render
+     */
+    private boolean renderImageMultithreaded(Pixel p) {
+        if (p == null) {
+            return false; // kill the thread
+        }
+
+        int nX = imageWriter.getNx();
+        int nY = imageWriter.getNy();
+        this.imageWriter.writePixel(p.col, p.row,castRay(nX, nY, p.col, p.row));
+        return true; // continue the rendering
+    }
+
+    /**
+     * Must run on the main thread.
+     * Prints the percent on multithreaded rendering.
+     */
+    private void printPercentMultithreaded() {
+        int nX = imageWriter.getNx();
+        int nY = imageWriter.getNy();
+        int pixels = nX * nY;
+        int lastPercent = -1;
+
+        while (nextPixel.row < nY) {
+            // waits until got update from the rendering threads
+            synchronized (this) {
+                try {
+                    wait();
+                }
+                catch (InterruptedException e) {
+                }
+            }
+
+            int currentPixel = nextPixel.row * nX + nextPixel.col;
+            lastPercent = printPercent(currentPixel, pixels, lastPercent);
+        }
+    }
+
+    /**
+     * Prints the progress in percents only if it is greater than the last time printed the progress.
+     *
+     * @param currentPixel the index of the current pixel
+     * @param pixels       the number of pixels in the image
+     * @param lastPercent  the percent of the last time printed the progress
+     * @return If printed the new percent, returns the new percent. Else, returns {@code lastPercent}.
+     */
+    private int printPercent(int currentPixel, int pixels, int lastPercent) {
+        int percent = currentPixel * 100 / pixels;
+        if (percent > lastPercent) {
+            System.out.printf("%02d%%\n", percent);
+            System.out.flush();
+            return percent;
+        }
+        return lastPercent;
+    }
+
+    /**
+     * Helper class to represent a pixel to draw in a multithreading rendering.
+     */
+    private static class Pixel {
+        public int col, row;
+
+        public Pixel(int col, int row) {
+            this.col = col;
+            this.row = row;
+        }
+
+        public Pixel() {
+        }
+    }
+
 }

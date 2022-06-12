@@ -165,10 +165,12 @@ public class Mp1test {
         scene1.lights.add(new PointLight(spCL, spPL2).setradius(5).setKl(0.001).setKq(0.0002));
 
         ImageWriter imageWriter = new ImageWriter("mp1SS", 1000, 1000);
-        camera1.setImageWriter(imageWriter) //
+        camera1.setImageWriter(imageWriter)
                 .setRayTracer(new RayTracerBasic(scene1))
-                .setSoftShadow(true, 10) //
-                .renderImage() //
-                .writeToImage(); //
+                .setSoftShadow(true)
+                .setNumOfRays(5)
+                .setMultithreading(4)
+                .renderImage()
+                .writeToImage();
     }
 }
