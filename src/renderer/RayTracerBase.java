@@ -34,5 +34,5 @@ public abstract class RayTracerBase {
      * @param isSoftShadow is soft shadow
      * @return The color of the intersection point.
      */
-    public abstract Color traceRay(Ray ray, boolean isSoftShadow);
+    public abstract Color traceRay(Ray ray, boolean isSoftShadow, int numOfRays);
 }

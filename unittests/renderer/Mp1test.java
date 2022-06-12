@@ -167,7 +167,7 @@ public class Mp1test {
         ImageWriter imageWriter = new ImageWriter("mp1SS", 1000, 1000);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene1))
-                .setSoftShadow(true) //
+                .setSoftShadow(true, 10) //
                 .renderImage() //
                 .writeToImage(); //
     }

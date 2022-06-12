@@ -61,12 +61,18 @@ public class Camera {
     private boolean isSoftShadow = false;
 
     /**
+     * the number of rays
+     */
+
+    private int numOfRays = 1;
+    /**
      * setter of softShadow
      * @param softShadow is soft shadow
      * @return the camera
      */
-    public Camera setSoftShadow(boolean softShadow) {
+    public Camera setSoftShadow(boolean softShadow, int numOfRays) {
         isSoftShadow = softShadow;
+        this.numOfRays = numOfRays;
         return this;
     }
 
@@ -221,7 +227,7 @@ public class Camera {
      * @return the color of the pixel
      */
     private Color castRay(int nX, int nY, int j, int i) {
-        return this.rayTracer.traceRay(this.constructRayThroughPixel(nX, nY, j, i), isSoftShadow);
+        return this.rayTracer.traceRay(this.constructRayThroughPixel(nX, nY, j, i), isSoftShadow, numOfRays);
     }
 
     /**

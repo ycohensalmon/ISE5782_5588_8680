@@ -50,8 +50,8 @@ public class RayTracerBasic extends RayTracerBase {
      * @param isSoftShadow is soft shadow
      * @return the color at this point with the ambient light, local and global effects
      */
-    private Color calcColor(GeoPoint closestPoint, Ray ray, boolean isSoftShadow) {
-        return calcColor(closestPoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K, isSoftShadow)
+    private Color calcColor(GeoPoint closestPoint, Ray ray, boolean isSoftShadow, int numOfRays) {
+        return calcColor(closestPoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K, isSoftShadow, numOfRays)
                 .add(scene.ambientLight.getIntensity());
     }
 
@@ -64,9 +64,9 @@ public class RayTracerBasic extends RayTracerBase {
      * @param isSoftShadow is soft shadow
      * @return the color at this point with the local and global effects
      */
-    private Color calcColor(GeoPoint geoPoint, Ray ray, int level, Double3 k, boolean isSoftShadow) {
-        Color color = calcLocalEffects(geoPoint, ray, k, isSoftShadow);
-        return 1 == level ? color : color.add(calcGlobalEffects(geoPoint, ray, level, k, isSoftShadow));
+    private Color calcColor(GeoPoint geoPoint, Ray ray, int level, Double3 k, boolean isSoftShadow, int numOfRays) {
+        Color color = calcLocalEffects(geoPoint, ray, k, isSoftShadow, numOfRays);
+        return 1 == level ? color : color.add(calcGlobalEffects(geoPoint, ray, level, k, isSoftShadow, numOfRays));
     }
 
     /**
@@ -78,14 +78,14 @@ public class RayTracerBasic extends RayTracerBase {
      * @param isSoftShadow is soft shadow
      * @return the global effects color
      */
-    private Color calcGlobalEffects(GeoPoint intersection, Ray ray, int level, Double3 k, boolean isSoftShadow) {
+    private Color calcGlobalEffects(GeoPoint intersection, Ray ray, int level, Double3 k, boolean isSoftShadow, int numOfRays) {
         Vector n = intersection.geometry.getNormal(intersection.point);
         Material material = intersection.geometry.getMaterial();
         Vector v = ray.getDir();
         Ray refractedRay = constructRefractedRay(intersection.point, v, n);
         Ray reflectedRay = constructReflectedRay(intersection.point, v, n);
-        return calcGlobalEffect(refractedRay, level, k, material.kT, isSoftShadow)
-                .add(calcGlobalEffect(reflectedRay, level, k, material.kR, isSoftShadow));
+        return calcGlobalEffect(refractedRay, level, k, material.kT, isSoftShadow, numOfRays)
+                .add(calcGlobalEffect(reflectedRay, level, k, material.kR, isSoftShadow, numOfRays));
     }
 
     /**
@@ -96,11 +96,11 @@ public class RayTracerBasic extends RayTracerBase {
      * @param isSoftShadow is soft shadow
      * @return the color affected by refraction/reflection
      */
-    private Color calcGlobalEffect(Ray ray, int level, Double3 k, Double3 kx, boolean isSoftShadow) {
+    private Color calcGlobalEffect(Ray ray, int level, Double3 k, Double3 kx, boolean isSoftShadow, int numOfRays) {
         Double3 kkx = k.product(kx);
         if (kkx.lowerThan(MIN_CALC_COLOR_K)) return Color.BLACK;
         GeoPoint reflectedPoint = findClosestIntersection(ray);
-        return reflectedPoint == null ? scene.background : calcColor(reflectedPoint, ray, level - 1, kkx, isSoftShadow).scale(kx);
+        return reflectedPoint == null ? scene.background : calcColor(reflectedPoint, ray, level - 1, kkx, isSoftShadow, numOfRays).scale(kx);
     }
 
     /**
@@ -137,7 +137,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param isSoftShadow is soft shadow
      * @return the color from the lights at the point
      */
-    private Color calcLocalEffects(GeoPoint geoPoint, Ray ray, Double3 k, boolean isSoftShadow) {
+    private Color calcLocalEffects(GeoPoint geoPoint, Ray ray, Double3 k, boolean isSoftShadow, int numOfRays) {
         Color color = geoPoint.geometry.getEmission();//Color.BLACK;
 
         //get color given by every light source
@@ -145,10 +145,10 @@ public class RayTracerBasic extends RayTracerBase {
         for (LightSource lightSource : scene.lights) {
             if (isSoftShadow) {
                 Color color1 = new Color(0, 0, 0);
-                for (Vector l : lightSource.getListL(geoPoint.point)) {
+                for (Vector l : lightSource.getList(geoPoint.point, numOfRays)) {
                     color1 = getColor(geoPoint, k, lightSource, color1, l, ray);
                 }
-                    color = color.add(color1.reduce(lightSource.getListL(geoPoint.point).size()));
+                    color = color.add(color1.reduce(lightSource.getList(geoPoint.point, numOfRays).size()));
             }
             else {
                 Vector l = lightSource.getL(geoPoint.point);
@@ -290,8 +290,8 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     @Override
-    public Color traceRay(Ray ray, boolean isSoftShadow) {
+    public Color traceRay(Ray ray, boolean isSoftShadow, int numOfRays) {
         GeoPoint closestPoint = findClosestIntersection(ray);
-        return closestPoint == null ? scene.background : calcColor(closestPoint, ray, isSoftShadow);
+        return closestPoint == null ? scene.background : calcColor(closestPoint, ray, isSoftShadow, numOfRays);
     }
 }
