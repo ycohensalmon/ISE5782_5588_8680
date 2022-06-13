@@ -253,7 +253,7 @@ public class Camera {
             return this;
         }
 
-        for (int i = 0; i < nY; i = i + 2) {
+        for (int i = 0; i < nY; i = ++i) {
             out.println(i + "/" + nY);
             for (int j = 0; j < nX; ++j) {
                 this.imageWriter.writePixel(j, i, castRay(nX, nY, j, i));
