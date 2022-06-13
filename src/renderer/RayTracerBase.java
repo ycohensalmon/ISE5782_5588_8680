@@ -32,7 +32,8 @@ public abstract class RayTracerBase {
      *
      * @param ray The ray to trace.
      * @param isSoftShadow is soft shadow
+     * @param isASS is adaptive super sampling
      * @return The color of the intersection point.
      */
-    public abstract Color traceRay(Ray ray, boolean isSoftShadow, int numOfRays);
+    public abstract Color traceRay(Ray ray, boolean isSoftShadow, int numOfRays, boolean isASS);
 }

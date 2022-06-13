@@ -58,6 +58,21 @@ public class Camera {
     private RayTracerBase rayTracer;
 
     /**
+    * turn on - off adaptive super sampling
+     */
+    private boolean isASS = false;
+
+    /**
+     * setter of adaptive super sampling
+     * @param ASS is adaptive super sampling
+     * @return the camera
+     */
+    public Camera setASS(boolean ASS) {
+        isASS = ASS;
+        return this;
+    }
+
+    /**
      * turn on - off soft shadow
      */
     private boolean isSoftShadow = false;
@@ -75,6 +90,7 @@ public class Camera {
 
     /**
      * setter of softShadow
+     *
      * @param softShadow is soft shadow
      * @return the camera
      */
@@ -85,6 +101,7 @@ public class Camera {
 
     /**
      * setter of numOfRays
+     *
      * @param numOfRays the number of rays
      * @return the camera
      */
@@ -92,23 +109,6 @@ public class Camera {
         this.numOfRays = numOfRays;
         return this;
     }
-
-    /**
-     *  get the soft shadow
-     * @return is soft shadow
-     */
-    public  boolean isSoftShadow() {
-        return isSoftShadow;
-    }
-
-    /**
-     * get the number of rays
-     * @return the number of rays
-     */
-    public int getNumOfRays() {
-        return numOfRays;
-    }
-
 
     /**
      * Constructs an instance of Camera with point and to and up vectors.
@@ -253,7 +253,7 @@ public class Camera {
             return this;
         }
 
-        for (int i = 0; i < nY; ++i) {
+        for (int i = 0; i < nY; i = i + 2) {
             out.println(i + "/" + nY);
             for (int j = 0; j < nX; ++j) {
                 this.imageWriter.writePixel(j, i, castRay(nX, nY, j, i));
@@ -267,12 +267,12 @@ public class Camera {
      *
      * @param nX number of pixels on X axis in the view plane
      * @param nY number of pixels on Y axis in the view plane
-     * @param j X coordinate of the pixel
-     * @param i Y coordinate of the pixel
+     * @param j  X coordinate of the pixel
+     * @param i  Y coordinate of the pixel
      * @return the color of the pixel
      */
     private Color castRay(int nX, int nY, int j, int i) {
-        return this.rayTracer.traceRay(this.constructRayThroughPixel(nX, nY, j, i), isSoftShadow, numOfRays);
+        return this.rayTracer.traceRay(this.constructRayThroughPixel(nX, nY, j, i), isSoftShadow, numOfRays, isASS);
     }
 
     /**
@@ -380,7 +380,7 @@ public class Camera {
 
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
-        this.imageWriter.writePixel(p.col, p.row,castRay(nX, nY, p.col, p.row));
+        this.imageWriter.writePixel(p.col, p.row, castRay(nX, nY, p.col, p.row));
         return true; // continue the rendering
     }
 
@@ -399,8 +399,7 @@ public class Camera {
             synchronized (this) {
                 try {
                     wait();
-                }
-                catch (InterruptedException e) {
+                } catch (InterruptedException e) {
                 }
             }
 

@@ -27,6 +27,7 @@ public interface LightSource {
 
     /**
      * calculate the distance between the point to the light source
+     *
      * @param point the point
      * @return the distance from point to the light
      */
@@ -34,9 +35,10 @@ public interface LightSource {
 
     /**
      * Get the direction of the light from a point
-     * @param p the point
+     *
+     * @param p         the point
      * @param numOfRays the number of rays
      * @return the direction
      */
-    List<Vector> getList(Point p,int numOfRays);
+    Vector[][] getList(Point p, int numOfRays);
 }

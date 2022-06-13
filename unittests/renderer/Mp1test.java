@@ -168,7 +168,8 @@ public class Mp1test {
         camera1.setImageWriter(imageWriter)
                 .setRayTracer(new RayTracerBasic(scene1))
                 .setSoftShadow(true)
-                .setNumOfRays(5)
+                .setNumOfRays(10)
+                .setASS(true)
                 .setMultithreading(4)
                 .renderImage()
                 .writeToImage();
