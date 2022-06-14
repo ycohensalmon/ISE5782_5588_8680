@@ -58,12 +58,13 @@ public class Camera {
     private RayTracerBase rayTracer;
 
     /**
-    * turn on - off adaptive super sampling
+     * turn on - off adaptive super sampling
      */
     private boolean isASS = false;
 
     /**
      * setter of adaptive super sampling
+     *
      * @param ASS is adaptive super sampling
      * @return the camera
      */
@@ -71,6 +72,11 @@ public class Camera {
         isASS = ASS;
         return this;
     }
+
+    /**
+     * The depth of adaptive super sampling's recursion
+     */
+    private int depth = 3;
 
     /**
      * turn on - off soft shadow
@@ -96,6 +102,17 @@ public class Camera {
      */
     public Camera setSoftShadow(boolean softShadow) {
         isSoftShadow = softShadow;
+        return this;
+    }
+
+    /**
+     * setter of depth
+     *
+     * @param depth The depth of adaptive super sampling's recursion
+     * @return the camera
+     */
+    public Camera setDepth(int depth) {
+        this.depth = depth;
         return this;
     }
 
@@ -272,7 +289,7 @@ public class Camera {
      * @return the color of the pixel
      */
     private Color castRay(int nX, int nY, int j, int i) {
-        return this.rayTracer.traceRay(this.constructRayThroughPixel(nX, nY, j, i), isSoftShadow, numOfRays, isASS);
+        return this.rayTracer.traceRay(this.constructRayThroughPixel(nX, nY, j, i), isSoftShadow, numOfRays, isASS, depth);
     }
 
     /**

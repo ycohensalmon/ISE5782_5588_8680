@@ -158,7 +158,7 @@ public class Mp1test {
         scene1.geometries.add(floor, left, right,light, line);
 
         scene1.geometries.add(floor, left, right, sphere1, sphere2, sphere3, sphere4, sphere5, sphere6, sphere7, sphere8,
-                sphere9, sphere10, sphere100, sphere101, sphere11, sphere12, sphere13, sphere14, sphere15, sphere16, sphere17, sphere18/*, sphere19,
+                sphere9, sphere10, /*sphere100, sphere101,*/ sphere11, sphere12, sphere13, sphere14, sphere15, sphere16, sphere17, sphere18/*, sphere19,
                 sphere20, sphere21, sphere22, sphere23, sphere24, sphere25, sphere26, sphere27, sphere28, sphere29, sphere30*/);
         scene1.lights.add(new DirectionalLight(new Color(200,50,80), trDL1));
         scene1.lights.add(new PointLight(spCL, spPL).setradius(5).setKl(0.001).setKq(0.0002));
@@ -169,6 +169,7 @@ public class Mp1test {
                 .setRayTracer(new RayTracerBasic(scene1))
                 .setSoftShadow(true)
                 .setNumOfRays(10)
+                .setDepth(3)
                 .setASS(true)
                 .setMultithreading(4)
                 .renderImage()

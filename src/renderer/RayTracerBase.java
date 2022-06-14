@@ -35,5 +35,5 @@ public abstract class RayTracerBase {
      * @param isASS is adaptive super sampling
      * @return The color of the intersection point.
      */
-    public abstract Color traceRay(Ray ray, boolean isSoftShadow, int numOfRays, boolean isASS);
+    public abstract Color traceRay(Ray ray, boolean isSoftShadow, int numOfRays, boolean isASS, int depth);
 }

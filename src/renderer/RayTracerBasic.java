@@ -34,11 +34,6 @@ public class RayTracerBasic extends RayTracerBase {
     private static final Double3 INITIAL_K = Double3.ONE;
 
     /**
-     * The depth of adaptive super sampling's recursion
-     */
-    private static final int DEPTH = 3;
-
-    /**
      * Constructs a new instance of ray tracer with a given scene.
      *
      * @param scene The given scene.
@@ -55,8 +50,8 @@ public class RayTracerBasic extends RayTracerBase {
      * @param isSoftShadow is soft shadow
      * @return the color at this point with the ambient light, local and global effects
      */
-    private Color calcColor(GeoPoint closestPoint, Ray ray, boolean isSoftShadow, int numOfRays, boolean isASS) {
-        return calcColor(closestPoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K, isSoftShadow, numOfRays, isASS)
+    private Color calcColor(GeoPoint closestPoint, Ray ray, boolean isSoftShadow, int numOfRays, boolean isASS, int depth) {
+        return calcColor(closestPoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K, isSoftShadow, numOfRays, isASS, depth)
                 .add(scene.ambientLight.getIntensity());
     }
 
@@ -69,9 +64,9 @@ public class RayTracerBasic extends RayTracerBase {
      * @param isSoftShadow is soft shadow
      * @return the color at this point with the local and global effects
      */
-    private Color calcColor(GeoPoint geoPoint, Ray ray, int level, Double3 k, boolean isSoftShadow, int numOfRays, boolean isASS) {
-        Color color = calcLocalEffects(geoPoint, ray, k, isSoftShadow, numOfRays, isASS);
-        return 1 == level ? color : color.add(calcGlobalEffects(geoPoint, ray, level, k, isSoftShadow, numOfRays, isASS));
+    private Color calcColor(GeoPoint geoPoint, Ray ray, int level, Double3 k, boolean isSoftShadow, int numOfRays, boolean isASS, int depth) {
+        Color color = calcLocalEffects(geoPoint, ray, k, isSoftShadow, numOfRays, isASS, depth);
+        return 1 == level ? color : color.add(calcGlobalEffects(geoPoint, ray, level, k, isSoftShadow, numOfRays, isASS, depth));
     }
 
     /**
@@ -83,14 +78,14 @@ public class RayTracerBasic extends RayTracerBase {
      * @param isSoftShadow is soft shadow
      * @return the global effects color
      */
-    private Color calcGlobalEffects(GeoPoint intersection, Ray ray, int level, Double3 k, boolean isSoftShadow, int numOfRays, boolean isASS) {
+    private Color calcGlobalEffects(GeoPoint intersection, Ray ray, int level, Double3 k, boolean isSoftShadow, int numOfRays, boolean isASS, int depth) {
         Vector n = intersection.geometry.getNormal(intersection.point);
         Material material = intersection.geometry.getMaterial();
         Vector v = ray.getDir();
         Ray refractedRay = constructRefractedRay(intersection.point, v, n);
         Ray reflectedRay = constructReflectedRay(intersection.point, v, n);
-        return calcGlobalEffect(refractedRay, level, k, material.kT, isSoftShadow, numOfRays, isASS)
-                .add(calcGlobalEffect(reflectedRay, level, k, material.kR, isSoftShadow, numOfRays, isASS));
+        return calcGlobalEffect(refractedRay, level, k, material.kT, isSoftShadow, numOfRays, isASS, depth)
+                .add(calcGlobalEffect(reflectedRay, level, k, material.kR, isSoftShadow, numOfRays, isASS, depth));
     }
 
     /**
@@ -102,11 +97,11 @@ public class RayTracerBasic extends RayTracerBase {
      * @param isSoftShadow is soft shadow
      * @return the color affected by refraction/reflection
      */
-    private Color calcGlobalEffect(Ray ray, int level, Double3 k, Double3 kx, boolean isSoftShadow, int numOfRays, boolean isASS) {
+    private Color calcGlobalEffect(Ray ray, int level, Double3 k, Double3 kx, boolean isSoftShadow, int numOfRays, boolean isASS, int depth) {
         Double3 kkx = k.product(kx);
         if (kkx.lowerThan(MIN_CALC_COLOR_K)) return Color.BLACK;
         GeoPoint reflectedPoint = findClosestIntersection(ray);
-        return reflectedPoint == null ? scene.background : calcColor(reflectedPoint, ray, level - 1, kkx, isSoftShadow, numOfRays, isASS).scale(kx);
+        return reflectedPoint == null ? scene.background : calcColor(reflectedPoint, ray, level - 1, kkx, isSoftShadow, numOfRays, isASS, depth).scale(kx);
     }
 
     /**
@@ -144,7 +139,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param isASS        is adaptive super sampling
      * @return the color from the lights at the point
      */
-    private Color calcLocalEffects(GeoPoint geoPoint, Ray ray, Double3 k, boolean isSoftShadow, int numOfRays, boolean isASS) {
+    private Color calcLocalEffects(GeoPoint geoPoint, Ray ray, Double3 k, boolean isSoftShadow, int numOfRays, boolean isASS, int depth) {
         Color color = geoPoint.geometry.getEmission();//Color.BLACK;
 
         //get color given by every light source
@@ -167,7 +162,7 @@ public class RayTracerBasic extends RayTracerBase {
                     if (lu.equals(ld) && lu.equals(ru) && lu.equals(rd)) {
                         color = color.add(lu);
                     } else {
-                        Color help = helpSuperSampling(lss, lu, ld, ru, rd, 0, 0, lss.length - 1, lss.length - 1, geoPoint, ray, k, lightSource, 0);
+                        Color help = helpSuperSampling(lss, lu, ld, ru, rd, 0, 0, lss.length - 1, lss.length - 1, geoPoint, ray, k, lightSource, depth);
                         color = color.add(help);
                     }
                 }
@@ -198,7 +193,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @return the color from the lights at the point
      */
     private Color helpSuperSampling(Vector[][] lss, Color lu, Color ld, Color ru, Color rd, int x, int y, int z, int w, GeoPoint geoPoint, Ray ray, Double3 k, LightSource lightSource, int depth) {
-        if (depth == DEPTH)
+        if (depth == 0)
             return lu;
         Color col = Color.BLACK;
         Color mu = getColor(geoPoint, k, lightSource, Color.BLACK, lss[x][(y + w) / 2], ray);
@@ -209,19 +204,19 @@ public class RayTracerBasic extends RayTracerBase {
         if (lu.equals(mu) && lu.equals(mm) && lu.equals(lm))
             col = col.add(lu);
         else
-            col = col.add(helpSuperSampling(lss, lu, lm, mu, mm, x, y, (x + z) / 2, (y + w) / 2, geoPoint, ray, k, lightSource, depth + 1));
+            col = col.add(helpSuperSampling(lss, lu, lm, mu, mm, x, y, (x + z) / 2, (y + w) / 2, geoPoint, ray, k, lightSource, depth - 1));
         if (mu.equals(ru) && mu.equals(mm) && mu.equals(rm))
             col = col.add(mu);
         else
-            col = col.add(helpSuperSampling(lss, mu, mm, ru, rm, x, (y + w) / 2, (x + z) / 2, w, geoPoint, ray, k, lightSource, depth + 1));
+            col = col.add(helpSuperSampling(lss, mu, mm, ru, rm, x, (y + w) / 2, (x + z) / 2, w, geoPoint, ray, k, lightSource, depth - 1));
         if (lm.equals(mm) && lm.equals(ld) && lm.equals(md))
             col = col.add(lm);
         else
-            col = col.add(helpSuperSampling(lss, lm, ld, mm, md, (x + z) / 2, y, z, (y + w) / 2, geoPoint, ray, k, lightSource, depth + 1));
+            col = col.add(helpSuperSampling(lss, lm, ld, mm, md, (x + z) / 2, y, z, (y + w) / 2, geoPoint, ray, k, lightSource, depth - 1));
         if (mm.equals(rm) && mm.equals(md) && mm.equals(rd))
             col = col.add(mm);
         else
-            col = col.add(helpSuperSampling(lss, mm, md, rm, rd, (x + z) / 2, (y + w) / 2, z, w, geoPoint, ray, k, lightSource, depth + 1));
+            col = col.add(helpSuperSampling(lss, mm, md, rm, rd, (x + z) / 2, (y + w) / 2, z, w, geoPoint, ray, k, lightSource, depth - 1));
         return col.reduce(4);
     }
 
@@ -357,8 +352,8 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     @Override
-    public Color traceRay(Ray ray, boolean isSoftShadow, int numOfRays, boolean isASS) {
+    public Color traceRay(Ray ray, boolean isSoftShadow, int numOfRays, boolean isASS, int depth) {
         GeoPoint closestPoint = findClosestIntersection(ray);
-        return closestPoint == null ? scene.background : calcColor(closestPoint, ray, isSoftShadow, numOfRays, isASS);
+        return closestPoint == null ? scene.background : calcColor(closestPoint, ray, isSoftShadow, numOfRays, isASS, depth);
     }
 }
